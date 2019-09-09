@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Index</title>
+</head>
+<body>
+<div class="menu">
+    <div class="content">
+        <div class="link">
+            <form method="get" action="userIndexUserServlet" name="form">
+                <input type="submit" class="button marginButton" value="Home" />
+            </form>
+            <form method="post" action="" name="form">
+                <input type="button" class="button marginButton" value="Request Add" onclick="checkBodyReg()"/>
+            </form>
+            <form method="post" action="" name="form">
+                <input type="button" class="button marginButton" value="Request Delete" onclick="checkBodySearch()"/>
+            </form>
+            <form method="post" action="" name="form">
+                <input type="button" class="button marginButton" value="Request List" onclick="checkBodyList('requestListUserServlet')" />
+            </form>
+            <form method="post" action="" name="form">
+                <input type="button" class="button marginButton" value="Request Search" onclick="checkBodyDelete()"/>
+            </form>
+            <form method="post" action="" name="form">
+                <input type="button" class="button marginButton" value="User Update" onclick="checkBodyUpdate()" />
+            </form>
+            <form method="post" action="" name="form">
+                <input type="button" class="button marginButton" value="Plan Work" onclick="checkBodyPlanWork('planWorkServlet')" />
+            </form>
+        </div>
+    </div>
+    <form method="post" action="userOutServlet" name="form">
+        <input type="submit" class="outButton" value="Exit" />
+    </form>
+</div>
+<div class="header" id="resBody">
+    <div class="content">
+        <h1 class="headertext">
+            CommunalService
+            <span style="color: #555; ">page</span> &
+            <span style="color: #555; ">What</span>
+            would you like to do
+        </h1>
+
+    </div>
+</div>
+<div id="resList" style="display: none;" >
+    <div class="headermini">
+        <div class="content">
+            <h1>Request List</h1>
+
+        </div>
+    </div>
+    <div class="mainmaxMain">
+        <div class="contentMain">
+            <table>  <tr>
+                <th>typeRequest</th>
+                <th>scale</th>
+                <th>dateFinish</th>
+                <th>address</th>
+                <th>function</th>
+            </tr>
+
+                <tr>
+                    <th><p id="typeRequest"></p></th>
+                    <th><p id="scale"></p></th>
+                    <th><p id="dateFinish"></p></th>
+                    <th><p id="address"></p></th>
+                    <th>
+                        <form method="post" action="" name="form" id="formDelete" onsubmit="return checkFormDelete(this)">
+                            <input value="" type="text" class="input" id="typeRequestDelete" name="typeRequest" placeholder="typeRequest"><br>
+                            <input value="" type="text" class="input" id="addressDelete" name="address" placeholder="address"><br>
+                            <input type="button" value="Delete" class="button marginButton" onclick="checkDelete('requestDeleteUserServlet')" />
+                        </form>
+                        <p id='errorLoginDelete' class='error'></p>
+                    </th>
+            </table>
+        </div>
+
+    </div>
+</div>
+<div id="resListWorker" style="display: none;">
+    <div class="headermini">
+        <div class="content">
+            <h1>PlanWork List</h1>
+
+        </div>
+    </div>
+    <div class="mainmaxMain">
+        <div class="contentMain">
+            <table>  <tr>
+                <th>typeRequest</th>
+                <th>scale</th>
+                <th>dateFinish</th>
+                <th>address</th>
+                <th>state Request</th>
+            </tr>
+
+                <tr>
+                    <th id="typeRequestTable"></th>
+                    <th id="scaleTable"></th>
+                    <th id="dateFinishTable"></th>
+                    <th id="addressTable"></th>
+                    <th id="stateRequest"></th>
+
+            </table>
+        </div>
+    </div>
+</div>
+    <div id="resDelete" style="display: none;">
+        <div class="headermini">
+            <div class="content">
+                <h1>Request Delete</h1>
+            </div>
+        </div>
+        <div class="mainmax">
+            <div class="content">
+                <div class="divNext"></div>
+                <div class="divNext">
+                    <form method="post" action="" name="form" id="formDeleteForm" onsubmit="return checkFormDeleteForm(this)">
+                        <input value="" type="text" class="input" id="typeRequestDeleteForm" name="typeRequest"  placeholder="typeRequest"><br>
+                        <input value="" type="text" class="input" id="addressDeleteForm" name="address"  placeholder="address"><br>
+                        <input type="button" class="button marginButton" value="Delete" onclick="checkDeleteForm('requestDeleteUserServlet')" />
+                    </form>
+                    <p id='errorLoginDeleteForm' class='error'></p>
+                </div>
+            </div>
+        </div>
+    </div>
+<div id="resAdd" style="display: none;">
+    <div class="headermini">
+        <div class="content">
+            <h1>Request Registration</h1>
+        </div>
+    </div>
+    <div class="mainmax">
+        <div class="content">
+            <div class="divNext"></div>
+            <div class="divNext">
+                <form method="post" action="requestAddUserServlet" name="form" id="formAdd" onsubmit="return checkFormAdd(this)">
+                    <input value="" type="text" class="input" id="typeRequestAddUserServlet" name="typeRequest" placeholder="typeRequest"><br>
+                    <input value="" type="text" class="input" id="scaleAddUserServlet" name="scale" placeholder="scale"><br>
+                    <input value="" type="date" class="input" id="dateFinishAddUserServlet" name="dateFinish" ><br>
+                    <input value="" type="text" class="input" id="addressAddUserServlet" name="address"  placeholder="address"> <br>
+                    <input type="submit" class="button marginButton" value="ADD"/>
+                </form>
+                <p id='errorLoginFormAdd' class='error'></p>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="resUpdate" style="display: none;" >
+    <div class="headermini">
+        <div class="content">
+            <h1>Request Search</h1>
+        </div>
+    </div>
+    <div class="mainmax">
+        <div class="content">
+            <div class="divNext"></div>
+            <div class="divNext">
+                <div id="resUpdateForm">
+                    <form method="post" action="" name="form" id="formSearchForm" onsubmit="return checkFormSearchForm(this)">
+                        <input value="" type="text" class="input" id="typeRequestSearchForm" name="typeRequest"  placeholder="typeRequest"><br>
+                        <input value="" type="text" class="input" id="addressSearchForm" name="address" placeholder="address"><br>
+                        <input type="button" class="button marginButton" value="Search" onclick="checkSearchForm('requestSearchUserServlet')" />
+                    </form>
+                    <p id='errorLoginSearchForm' class='error'></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="resUpdateResult" style="display: none;">
+        <div class="mainmax">
+            <div class="content">
+                <div class="divNext"></div>
+                <div class="divNext">
+                    <div class="divNext">
+                        <table class="input">
+                            <th align="left"><span style="color: blue; "></span><strong>typeRequest<p id="typeRequestSearchResult"></p></strong> </th>
+                        </table>
+                        <table class="input">
+                            <th align="left"><span style="color: blue; "></span><strong>scale<p id="scaleSearchResult"></p></strong> </th>
+                        </table>
+                        <table class="input">
+                            <th align="left"><span style="color: blue; "></span><strong>dateFinish<p id="dateFinishSearchResult"></p></strong> </th>
+                        </table>
+                        <table class="input">
+                            <th align="left"><span style="color: blue; "></span><strong>address<p id="addressSearchResult"></p></strong> </th>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="resUpdateTable" style="display: none;" >
+    <div class="headermini">
+        <div class="content">
+            <h1>User Update</h1>
+        </div>
+    </div>
+    <div class="mainmax">
+        <div class="content">
+            <div class="divNext"></div>
+            <div class="divNext">
+                <div id="resUpdateUser">
+                    <form method="post" action="" name="form" id="formSearchUpdate" onsubmit="return checkFormSearchUpdate(this)">
+                        <input value="" type="text" class="input" id="nameSearchUpdate" name="name"  placeholder="name"><br>
+                        <input value="" type="text" class="input" id="surnameSearchUpdate" name="surname" placeholder="surname"> <br>
+                        <input type="button" class="button marginButton" value="Search" onclick="checkSearchUpdate('userSearchUserServlet')" />
+                    </form>
+                    <p id='errorLoginSearchUpdate' class='error'></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="resUpdateFormUser" style="display: none;">
+        <div class="mainmax">
+            <div class="content">
+                <div class="divNext"></div>
+                <div class="divNext">
+                    <form method="post" action="" name="form" id="formUpdateResult" onsubmit="return checkFormUpdateResult(this)">
+                        <p>serial number</p> <input value="" disabled type="text" class="input" id="idUserUpdateResult" name="idUser"  placeholder="serialNumber"><br>
+                        <p>login</p>  <input value="" type="text" class="input" id="loginUpdateResult" name="login"  placeholder="login"><br>
+                        <p>password</p>  <input value="" type="text" class="input" id="passwordUpdateResult" name="password"  placeholder="password"><br>
+                        <p>name</p>  <input value="" type="text" class="input" id="nameUpdateResult" name="name"  placeholder="name"><br>
+                        <p>surname</p>  <input value="" type="text" class="input" id="surnameUpdateResult" name="surname"  placeholder="surname"><br>
+                        <input type="button" class="button marginButton" value="Update" onclick="checkUpdateResult('userUpdateUserServlet')" />
+                    </form>
+                    <p id='errorLoginUpdateResult' class='error'></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="main">
+    <div class="content">
+        <div class="divNext">
+            <p><div class="miniround"></div> the latest technology</p>
+            <p><div class="miniround"></div> the best workers</p>
+            <p><div class="miniround"></div> the fastest service</p>
+            <p><div class="miniround"></div> the latest technology only here</p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+<script type="application/x-javascript">
+    function checkBodyUpdate(){
+        onclick = document.getElementById("resAdd").style.display = 'none';
+        onclick = document.getElementById("resList").style.display = 'none';
+        onclick = document.getElementById("resBody").style.display = 'none';
+        onclick = document.getElementById("resListWorker").style.display = 'none';
+        onclick = document.getElementById("resDelete").style.display = 'none';
+        onclick = document.getElementById("resUpdate").style.display = 'none';
+        onclick = document.getElementById("resUpdateTable").style.display = 'block';
+    }
+    function checkFormSearchUpdate(form){
+        var reg = new RegExp("^[a-zA-ZА-Яа-я]+$");
+        var name = document.getElementById("nameSearchUpdate").value;
+        var  surname = document.getElementById("surnameSearchUpdate").value;
+        if (name == ""|| surname == "" ){
+            document.getElementById("errorLoginSearchUpdate").innerHTML="This field is not filled";
+            return false;
+        }
+        if((name.length <2 || name.length > 15) || (surname.length < 2 || surname.length > 15)){
+            document.getElementById("errorLoginSearchUpdate").innerHTML="Went beyond the meanings";
+            return false;
+        }
+        if(reg.test(name) == false || reg.test(surname) == false){
+            document.getElementById("errorLoginSearchUpdate").innerHTML="invalid value entry";
+            return false;
+        }
+        return true;
+    }
+    function checkSearchUpdate(srvUrl) {
+        if(checkFormSearchUpdate(form) == true){
+            onclick = document.getElementById("resUpdateFormUser").style.display = 'block';
+            var mainForm = document.getElementById("formSearchUpdate");
+            var user = {};
+            for(var i =0; i<mainForm.elements.length;i++){
+                if(mainForm.elements[i].type== "text"){
+                    user[mainForm.elements[i].name] = mainForm.elements[i].value;
+                }
+            }
+            var json = JSON.stringify(user);
+            var hrequest = new XMLHttpRequest();
+            hrequest.open("POST",srvUrl,true);
+            hrequest.onreadystatechange = function () {
+                if(hrequest.status == 200){
+                    var  jsUser = JSON.parse(hrequest.response);
+                    document.getElementById("idUserUpdateResult").value = jsUser.idUser;
+                    document.getElementById("loginUpdateResult").value = jsUser.login;
+                    document.getElementById("passwordUpdateResult").value = jsUser.password;
+                    document.getElementById("nameUpdateResult").value = jsUser.name;
+                    document.getElementById("surnameUpdateResult").value = jsUser.surname;
+                }else {
+                    document.write("Ответ сервера" + hrequest.statusText);
+                }
+            };
+            hrequest.send(json);
+        }else {
+            return false;
+        }
+    }
+    function checkFormUpdateResult(form){
+        var reg = new RegExp("^[a-zA-ZА-Яа-я]+$");
+        var reqs = new RegExp("^[a-zA-ZА-Яа-я0-9]+$");
+        var login = document.getElementById("loginUpdateResult").value;
+        var  password = document.getElementById("passwordUpdateResult").value;
+        var name = document.getElementById("nameUpdateResult").value;
+        var  surname = document.getElementById("surnameUpdateResult").value;
+        if (name == ""|| surname == "" || login == ""|| password == ""){
+            document.getElementById("errorLoginUpdateResult").innerHTML="This field is not filled";
+            return false;
+        }
+        if((name.length <2 || name.length > 15) || (surname.length < 2 || surname.length > 15)||(login.length <2 || login.length > 15) || (password.length <2 || password.length > 15)){
+            document.getElementById("errorLoginUpdateResult").innerHTML="Went beyond the meanings";
+            return false;
+        }
+        if(reg.test(name) === false || reg.test(surname) === false || reg.test(login) === false || reqs.test(password) === false){
+            document.getElementById("errorLoginUpdateResult").innerHTML="invalid value entry";
+            return false;
+        }
+        return true;
+    }
+    function checkUpdateResult(srvUrl) {
+        if(checkFormUpdateResult(form) == true){
+            var mainForm = document.getElementById("formUpdateResult");
+            var user = {};
+            for(var i =0; i<mainForm.elements.length;i++){
+                if(mainForm.elements[i].type== "text"){
+                    user[mainForm.elements[i].name] = mainForm.elements[i].value;
+                }
+            }
+            var json = JSON.stringify(user);
+            var hrequest = new XMLHttpRequest();
+            hrequest.open("POST",srvUrl,true);
+            hrequest.onreadystatechange = function () {
+                if(hrequest.status == 200){
+                    var jsons = JSON.parse(hrequest.response);
+                    document.getElementById("errorLoginUpdateResult").innerHTML=jsons;
+                }else {
+                    document.write("Ответ сервера" + hrequest.statusText);
+                }
+            };
+            hrequest.send(json);
+        }else {
+            return false;
+        }
+    }
+    function checkBodyDelete(){
+        onclick = document.getElementById("resAdd").style.display = 'none';
+        onclick = document.getElementById("resList").style.display = 'none';
+        onclick = document.getElementById("resBody").style.display = 'none';
+        onclick = document.getElementById("resListWorker").style.display = 'none';
+        onclick = document.getElementById("resDelete").style.display = 'none';
+        onclick = document.getElementById("resUpdate").style.display = 'block';
+        onclick = document.getElementById("resUpdateTable").style.display = 'none';
+    }
+    function checkFormSearchForm(form){
+        var reg = new RegExp("^[a-zA-ZА-Яа-я]+$");
+        var typeRequest = document.getElementById("typeRequestSearchForm").value;
+        var address = document.getElementById("addressSearchForm").value;
+        if (typeRequest == "" || address == ""){
+            document.getElementById("errorLoginSearchForm").innerHTML="This field is not filled";
+            return false;
+        }
+        if((typeRequest.length <2 || typeRequest.length > 15)||(address.length <2 || address.length > 15)){
+            document.getElementById("errorLoginSearchForm").innerHTML="Went beyond the meanings";
+            return false;
+        }
+        if(reg.test(typeRequest) == false || reg.test(address) == false){
+            document.getElementById("errorLoginSearchForm").innerHTML="invalid value entry";
+            return false;
+        }
+        return true;
+    }
+    function checkSearchForm(srvUrl) {
+        if(checkFormSearchForm(form) == true){
+            onclick = document.getElementById("resUpdateResult").style.display = 'block';
+            var form = document.getElementById("formSearchForm");
+            var request = {};
+            for (var i =0;i<form.elements.length;i++){
+                if(form.elements[i].type == "text"){
+                    request[form.elements[i].name] = form.elements[i].value;
+                }
+            }
+            var hrequest = new XMLHttpRequest();
+            var json = JSON.stringify(request);
+            hrequest.open("POST",srvUrl,true);
+            hrequest.onreadystatechange = function () {
+                if(hrequest.status == 200 && hrequest.readyState == 4){
+                    var  jsRequest = JSON.parse(hrequest.responseText);
+                    document.getElementById("typeRequestSearchResult").innerHTML = jsRequest.typeRequest;
+                    document.getElementById("scaleSearchResult").innerHTML = jsRequest.scale;
+                    document.getElementById("dateFinishSearchResult").innerHTML = jsRequest.dateFinish;
+                    document.getElementById("addressSearchResult").innerHTML = jsRequest.address;
+                }
+            };
+            hrequest.send(json);
+        }else {
+            return false;
+        }
+    }
+    function checkBodyReg(){
+        onclick = document.getElementById("resAdd").style.display = 'block';
+        onclick = document.getElementById("resList").style.display = 'none';
+        onclick = document.getElementById("resBody").style.display = 'none';
+        onclick = document.getElementById("resListWorker").style.display = 'none';
+        onclick = document.getElementById("resDelete").style.display = 'none';
+        onclick = document.getElementById("resUpdate").style.display = 'none';
+        onclick = document.getElementById("resUpdateTable").style.display = 'none';
+    }
+    function checkFormAdd(form){
+        var reg = new RegExp("^[a-zA-ZА-Яа-я]+$");
+        var reqs = new RegExp("^[a-zA-ZА-Яа-я0-9]+$");
+        var typeRequest = document.getElementById("typeRequestAdd").value;
+        var  scale = document.getElementById("scaleAdd").value;
+        var address = document.getElementById("addressAdd").value;
+        if (typeRequest == ""|| scale == "" || address == ""){
+            document.getElementById("errorLoginAdd").innerHTML="This field is not filled";
+            return false;
+        }
+        if((typeRequest.length <2 || typeRequest.length > 15) || (scale.length < 2 || scale.length > 15)||(address.length <2 || address.length > 15)){
+            document.getElementById("errorLoginAdd").innerHTML="Went beyond the meanings";
+            return false;
+        }
+        if(reg.test(typeRequest) == false || reg.test(address) == false || reqs.test(scale) == false){
+            document.getElementById("errorLoginAdd").innerHTML="invalid value entry";
+            return false;
+        }
+        return true;
+    }
+    function checkBodySearch(){
+        onclick = document.getElementById("resDelete").style.display = 'block';
+        onclick = document.getElementById("resList").style.display = 'none';
+        onclick = document.getElementById("resBody").style.display = 'none';
+        onclick = document.getElementById("resAdd").style.display = 'none';
+        onclick = document.getElementById("resListWorker").style.display = 'none';
+        onclick = document.getElementById("resUpdate").style.display = 'none';
+        onclick = document.getElementById("resUpdateTable").style.display = 'none';
+    }
+    function checkFormDeleteForm(form){
+        var reg = new RegExp("^[a-zA-ZА-Яа-я]+$");
+        var typeRequest = document.getElementById("typeRequestDeleteForm").value;
+        var address = document.getElementById("addressDeleteForm").value;
+        if (typeRequest == "" || address == ""){
+            document.getElementById("errorLoginDeleteForm").innerHTML="This field is not filled";
+            return false;
+        }
+        if((typeRequest.length <2 || typeRequest.length > 15)||(address.length <2 || address.length > 15)){
+            document.getElementById("errorLoginDeleteForm").innerHTML="Went beyond the meanings";
+            return false;
+        }
+        if(reg.test(typeRequest) == false || reg.test(address) == false){
+            document.getElementById("errorLoginDeleteForm").innerHTML="invalid value entry";
+            return false;
+        }
+        return true;
+    }
+    function checkDeleteForm(srvUrl) {
+        if(checkFormDeleteForm(form) == true){
+            var form = document.getElementById("formDeleteForm");
+            var request = {};
+            for (var i =0;i<form.elements.length;i++){
+                if(form.elements[i].type == "text"){
+                    request[form.elements[i].name] = form.elements[i].value;
+                }
+            }
+            var hrequest = new XMLHttpRequest();
+            var json = JSON.stringify(request);
+            hrequest.open("POST",srvUrl,true);
+            hrequest.onreadystatechange = function () {
+                if(hrequest.status == 200){
+                    var js = JSON.parse(hrequest.response);
+                    document.getElementById("errorLoginDeleteForm").innerHTML = js;
+                }
+            };
+            hrequest.send(json);
+        }else {
+            return false;
+        }
+    }
+    function checkBodyList(srvUrl){
+        onclick = document.getElementById("resList").style.display = 'block';
+        onclick = document.getElementById("resUpdate").style.display = 'none';
+        onclick = document.getElementById("resListWorker").style.display = 'none';
+        onclick = document.getElementById("resBody").style.display = 'none';
+       onclick = document.getElementById("resAdd").style.display = 'none';
+        onclick = document.getElementById("resDelete").style.display = 'none';
+        onclick = document.getElementById("resUpdateTable").style.display = 'none';
+        var hreq = new XMLHttpRequest();
+        hreq.open("POST",srvUrl,true);
+        hreq.onreadystatechange = function () {
+            if(hreq.status == 200){
+                var js = JSON.parse(hreq.response);
+                var  txt1 ="";
+                txt1 += "<table>";
+            var txt2="",txt3 ="", txt4 = "";
+                for (var key in js){
+                    txt1 += "<tr><td>" + js[key].typeRequest + "</td></tr>";
+                }
+                txt1 += "</table>";
+                txt2 += "<table>";
+                for (var key in js){
+                    txt2 += "<tr><td>" + js[key].scale + "</td></tr>";
+                }
+                txt2 += "</table>";
+                txt3 += "<table>";
+                for (var key in js){
+                    txt3 += "<tr><td id='col3'>" + js[key].dateFinish + "</td></tr>";
+                }
+                txt3 += "</table>";
+                txt4 += "<table>";
+                for (var key in js){
+                    txt4 += "<tr><td>" + js[key].address + "</td></tr>";
+                }
+                txt4 += "</table>";
+                document.getElementById("typeRequest").innerHTML = txt1;
+                document.getElementById("scale").innerHTML = txt2;
+                document.getElementById("dateFinish").innerHTML = txt3;
+                document.getElementById("address").innerHTML = txt4;
+            }
+        };
+        hreq.send();
+    }
+
+    function checkFormDelete(form){
+        var reg = new RegExp("^[a-zA-ZА-Яа-я]+$");
+        var typeRequest = document.getElementById("typeRequestDelete").value;
+        var address = document.getElementById("addressDelete").value;
+        if (typeRequest == "" || address == ""){
+            document.getElementById("errorLoginDelete").innerHTML="This field is not filled";
+            return false;
+        }
+        if((typeRequest.length <2 || typeRequest.length > 15)||(address.length <2 || address.length > 15)){
+            document.getElementById("errorLoginDelete").innerHTML="Went beyond the meanings";
+            return false;
+        }
+        if(reg.test(typeRequest) == false || reg.test(address) == false){
+            document.getElementById("errorLoginDelete").innerHTML="invalid value entry";
+            return false;
+        }
+        return true;
+    }
+    function checkDelete(srvUrl) {
+        if(checkFormDelete(form) == true){
+            var form = document.getElementById("formDelete");
+            var  request = {};
+            for (var i =0;i<form.elements.length;i++){
+                if(form.elements[i].type == "text"){
+                    request[form.elements[i].name] = form.elements[i].value;
+                }
+            }
+            var  hrequest = new XMLHttpRequest();
+            var json = JSON.stringify(request);
+            hrequest.open("POST",srvUrl,true);
+            hrequest.onreadystatechange = function () {
+                if (hrequest.status == 200) {
+                    var js = JSON.parse(hrequest.response);
+                    document.getElementById("errorLoginDelete").innerHTML = js;
+                }
+            };
+            hrequest.send(json);
+        }else {
+            return false;
+        }
+    }
+    function checkBodyPlanWork(srvUrl){
+        onclick = document.getElementById("resListWorker").style.display = 'block';
+        onclick = document.getElementById("resUpdate").style.display = 'none';
+        onclick = document.getElementById("resList").style.display = 'none';
+        onclick = document.getElementById("resBody").style.display = 'none';
+       onclick = document.getElementById("resAdd").style.display = 'none';
+        onclick = document.getElementById("resDelete").style.display = 'none';
+        onclick = document.getElementById("resUpdateTable").style.display = 'none';
+        var hrequest = new XMLHttpRequest();
+        hrequest.open("POST",srvUrl,true);
+        hrequest.onreadystatechange = function () {
+            if(hrequest.status == 200){
+                var js = JSON.parse(hrequest.response);
+                var  txt1 ="";
+                txt1 += "<table>";
+           var txt2="",txt3 ="",txt4 = "", txt5 = "", txt6 = "", txt7 = "";
+                for (var key in js){
+                    txt1 += "<tr><td>" + js[key].typeRequest + "</td></tr>";
+                }
+                txt1 += "</table>";
+                txt2 += "<table>";
+                for (var key in js){
+                    txt2 += "<tr><td>" + js[key].scale + "</td></tr>";
+                }
+                txt2 += "</table>";
+                txt3 += "<table>";
+                for (var key in js){
+                    txt3 += "<tr><td id='col3'>" + js[key].dateFinish + "</td></tr>";
+                }
+                txt3 += "</table>";
+                txt4 += "<table>";
+                for (var key in js){
+                    txt4 += "<tr><td>" + js[key].address + "</td></tr>";
+                }
+                txt4 += "</table>";
+                txt5 += "<table>";
+                for (var key in js){
+                    var jsr = js[key].idPlanWork;
+                    var resul = {};
+                    if(jsr == 1){
+                        resul = "Request in progress";
+                    }else {
+                        resul = "Request complete";
+                    }
+                    txt5 += "<tr><td>" + resul + "</td></tr>";
+
+                }
+                txt5 += "</table>";
+                document.getElementById("typeRequestTable").innerHTML = txt1;
+                document.getElementById("scaleTable").innerHTML = txt2;
+                document.getElementById("dateFinishTable").innerHTML = txt3;
+                document.getElementById("addressTable").innerHTML = txt4;
+                document.getElementById("stateRequest").innerHTML = txt5;
+            }
+        };
+        hrequest.send();
+    }
+</script>
+<style>
+    .outButton {
+        text-decoration: none;
+        outline: none;
+        display: inline-block;
+        color: white;
+        padding: 20px 30px;
+
+
+        border-radius: 10px;
+        font-family: 'Montserrat', sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        background-image: linear-gradient(to right, #9EEFE1 0%, #4830F0 51%, #9EEFE1 100%);
+        background-size: 200% auto;
+        box-shadow: 0 0 20px rgba(0,0,0,.1);
+        transition: .5s;
+    }
+    .outButton:hover {background-position: right center;}
+    .contentMain{
+        width: 1200px;
+        margin-left: 50px;
+
+    }
+    .mainmaxMain{
+        height: 1400px;
+    }
+
+    table {width: 100%; border-collapse: collapse;}
+    table thead tr {color: #ffffff; font-weight: bold; background: #00bf80;}
+    table thead tr td {border: 1px solid #01ab73;}
+    table tbody tr td {border: 1px solid #e8e9eb;}
+    table tbody tr:nth-child(2n) {background: #f4f4f4;}
+    table tbody tr:hover {background: #ebffe8;}
+    .header{
+        height: 700px;
+        background: #f3efe3;
+        border-top: 2px solid #eae6d8;
+        box-shadow: 0 10px 20px 10px rgba(0,0,0,0.1);
+    }
+    body{
+        margin: 0;
+    }
+    .menu{
+        height: 150px;
+        background: linear-gradient(to bottom, #eee, #fefefe);
+    }
+    .headermini{
+        height: 100px;
+        background: #f3efe3;
+        border-top: 2px solid #eae6d8;
+        box-shadow: 0 10px 20px 10px rgba(0,0,0,0.1);
+    }
+    h1{
+        font-size: 40px;
+    }
+    .main{
+        height: 400px;
+    }
+    .content{
+        width: 1200px;
+        margin:0 auto;
+        min-height: 50px;
+    }
+    .link{
+        padding-top: 35px;
+        height: 95px;
+        width: 1200px;
+        float: left;
+        text-align: right;
+    }
+    .headertext{
+        text-align: center;
+        font-size: 40px;
+        color:#888;
+    }
+    .divNext{
+        padding-top: 100px;
+        height: 300px;
+        width: 498px;
+        float: left;
+    }
+    .miniround{
+        height: 20px;
+        width: 20px;
+        background: #42a9f8;
+        border-radius: 50%;
+        float: left;
+        margin:-1px 15px 0 0;
+    }
+    .button{
+        padding:0 10px;
+        background: #42a9f8;
+        height: 40px;
+        min-width: 140px;
+        float: left;
+        border-radius: 20px;
+        color:white;
+        text-align: center;
+        line-height: 39px;
+    }
+    .button:hover{
+        background: #f84242;
+        cursor:pointer;
+    }
+    .input{
+        padding: 10px;
+        margin:10px;
+        width: 250px;
+        outline: none;
+        box-shadow:
+                inset 0 30px 30px -15px rgba(0,0,0,0.1);
+        border:1px solid #ddd;
+    }
+    .marginButton{
+        margin-left: 10px;
+    }
+
+</style>

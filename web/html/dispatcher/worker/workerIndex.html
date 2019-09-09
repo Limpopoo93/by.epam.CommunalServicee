@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Worker Index</title>
+</head>
+<body>
+<div class="menu">
+    <div class="content">
+        <div class="link">
+            <form method="get" action="indexServlet" name="form">
+                <input type="submit" class="button marginButton" value="Home"/>
+            </form>
+            <form method="post" action="" name="form">
+                <input type="button" class="button marginButton" value="Registration" onclick="checkBodyReg()" />
+            </form>
+            <form method="post" action="" name="form">
+                <input type="button" class="button marginButton" value="Search" onclick="checkBodySearch()" />
+            </form>
+            <form method="post" action="" name="form">
+                <input type="button" class="button marginButton" value="Delete" onclick="checkBodyDelete()"  />
+            </form>
+            <form method="post" action="" name="form">
+                <input type="button" class="button marginButton" value="Update" onclick="checkBodyUpdate()" />
+            </form>
+            <form method="post" action="" name="form">
+                <input type="button" class="button marginButton" value="List" onclick="checkBodyList('workerListServlet')" />
+            </form>
+        </div>
+    </div>
+    <form method="post" action="userOutServlet" name="form">
+        <input type="submit" class="outButton" value="Exit" />
+    </form>
+</div>
+<div class="header" id="resBody">
+    <div class="content">
+        <h1 class="headertext">
+            Worker
+            <font color="#555">page</font> &
+            <font color="#555">What</font>
+            would you like to do
+        </h1>
+    </div>
+</div>
+
+<div id="resList" style="display: none;" >
+    <div class="headermini">
+        <div class="content">
+            <h1>Worker List</h1>
+
+        </div>
+    </div>
+    <div class="mainmaxMain">
+        <div class="contentMain">
+<table>
+<tr>
+    <th>name</th>
+    <th>surname</th>
+    <th>typeWorker</th>
+    <th>addBrigade</th>
+    <th>function Delete</th>
+</tr>
+    <tr>
+        <th><p id="nameWorker"></p></th>
+        <th><p id="surnameWorker"></p></th>
+        <th><p id="typeWorker"></p></th>
+
+        <th>
+            <form method="post" action="" name="form" id="formDelete" onsubmit="return checkFormDelete(this)">
+                <input value="" type="text" class="input" id="nameBrigadeDelete" name="nameBrigade" placeholder="nameBrigade"><br>
+                <input value="" type="text" class="input" id="nameDelete" name="name" placeholder="nameWorker"><br>
+                <input value="" type="text" class="input" id="surnameDelete" name="surname" placeholder="surnameWorker"><br>
+                <input type="button" class="button marginButton" value="AddWorkerBrigade" onclick="checkDelete('workerAddBrigadeServlet')" />
+                <p id='errorLoginDelete' class='error'></p>
+            </form>
+        </th>
+        <th>
+            <form method="post" action="" name="form" id="formAddPlanWork" onsubmit="return checkFormAddPlanWork(this)">
+                <input value="" type="text" class="input" id="nameWorkerAddPlanWork" name="name" placeholder="nameWorker"><br>
+                <input value="" type="text" class="input" id="surnameWorkerAddPlanWork" name="surname" placeholder="surnameWorker"><br>
+                <input type="button" class="button marginButton" value="Delete" onclick="checkAddPlanWork('workerDeleteServlet')" />
+                <p id='errorLoginAddPlanWork' class='error'></p>
+            </form>
+        </th>
+
+</table>
+        </div>
+    </div>
+</div>
+<div id="resAdd" style="display: none;">
+    <div class="headermini">
+        <div class="content">
+            <h1>Worker Registration</h1>
+        </div>
+    </div>
+    <div class="mainmax">
+        <div class="content">
+            <div class="divNext"></div>
+            <div class="divNext">
+                <form method="post" action="" name="form" id="formAdd" onsubmit="return checkFormAdd(this)">
+                    <input value="" type="text" class="input" id="nameAdd" name="name" placeholder="name"><br>
+                    <input value="" type="text" class="input" id="surnameAdd" name="surname"  placeholder="surname"><br>
+                    <input value="" type="text" class="input" id="typeWorkerAdd" name="typeWorker"  placeholder="typeWorker"><br>
+                    <input type="button" class="button marginButton" value="ADD" onclick="checkAdd('workerAddServlet')" />
+                </form>
+                <p id='errorLoginAdd' class='error'></p>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="resDelete" style="display: none;">
+    <div class="headermini">
+        <div class="content">
+            <h1>Worker Delete</h1>
+        </div>
+    </div>
+    <div class="mainmax">
+        <div class="content">
+            <div class="divNext"></div>
+            <div class="divNext">
+                <form method="post" action="" name="form" id="formDeleteForm" onsubmit="return checkFormDeleteForm(this)">
+                    <input value="" type="text" class="input" id="nameDeleteForm" name="name" placeholder="name"><br>
+                    <input value="" type="text" class="input" id="surnameDeleteForm" name="surname"  placeholder="surname"><br>
+                    <input type="button" class="button marginButton" value="Delete" onclick="checkDeleteForm('workerDeleteServlet')" />
+                </form>
+                <p id='errorLoginDeleteForm' class='error'></p>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="resUpdate" style="display: none;" >
+    <div class="headermini">
+        <div class="content">
+            <h1>Worker Update</h1>
+        </div>
+    </div>
+    <div class="mainmax">
+        <div class="content">
+            <div class="divNext"></div>
+            <div class="divNext">
+                <div id="resUpdateForm">
+                    <form method="post" action="" name="form" id="formSearchForm" onsubmit="return checkFormSearchForm(this)">
+                        <input value="" type="text" class="input" id="nameSearchForm" name="name"  placeholder="name"><br>
+                        <input value="" type="text" class="input" id="surnameSearchForm" name="surname"  placeholder="surname"><br>
+                        <input type="button" class="button marginButton" value="Search" onclick="checkSearchForm('workerSearchTwoServlet')" />
+                    </form>
+                    <p id='errorLoginSearchForm' class='error'></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="resUpdateResult" style="display: none;">
+        <div class="mainmax">
+            <div class="content">
+                <div class="divNext"></div>
+                <div class="divNext">
+                    <form method="post" action="" name="form" id="formUpdate" onsubmit="return checkFormUpdate(this)">
+                        <p>serial number</p>  <input value="" type="text" disabled class="input" id="idWorkerUpdate" name="idWorker"  placeholder="serialNumber"><br>
+                        <p>name</p>  <input value="" type="text" class="input" id="namUpdate" name="name"  placeholder="name"><br>
+                        <p>surname</p>  <input value="" type="text" class="input" id="surnameUpdate" name="surname"  placeholder="surname"><br>
+                        <p>typeWorker</p>  <input value="" type="text" class="input" id="typeWorkerUpdate" name="typeWorker"  placeholder="typeWorker"><br>
+                          <input type="button" class="button marginButton" value="Update" onclick="checkUpdate('workerUpdateServlet')" />
+                    </form>
+                    <p id='errorLoginUpdate' class='error'></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="resSearch" style="display: none;" >
+    <div class="headermini">
+        <div class="content">
+            <h1>Worker Search</h1>
+        </div>
+    </div>
+    <div class="mainmax">
+        <div class="content">
+            <div class="divNext"></div>
+            <div class="divNext">
+                <div id="resSearchForm">
+                    <form method="post" action="" name="form" id="formSearch" onsubmit="return checkFormSearch(this)">
+                        <input value="" type="text" class="input" id="nameSearch" name="name"  placeholder="name"><br>
+                        <input value="" type="text" class="input" id="surnameSearch" name="surname"  placeholder="surname"><br>
+                        <input type="button" class="button marginButton" value="Search" onclick="checkSearch('workerSearchTwoServlet')" />
+                    </form>
+                    <p id='errorLoginSearch' class='error'></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="resSearchResult" style="display: none;">
+        <div class="mainmax">
+            <div class="content">
+                <div class="divNext"></div>
+                <div class="divNext">
+                    <div class="divNext">
+                        <table class="input">
+                            <th align="left"><span style="color: blue; "></span><strong>Name<p id="nameSearchResult"></p></strong> </th>
+                        </table>
+                        <table class="input">
+                            <th align="left"><span style="color: blue; "></span><strong>Surname<p id="surnameSearchResult"></p> </strong> </th>
+                        </table>
+                        <table class="input">
+                            <th align="left"><span style="color: blue; "></span><strong>TypeWorker<p id="typeWorkerSearchResult"></p></strong> </th>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="main">
+    <div class="content">
+        <div class="divNext">
+            <p><div class="miniround"></div> the latest technology</p>
+            <p><div class="miniround"></div> the best workers</p>
+            <p><div class="miniround"></div> the fastest service</p>
+            <p><div class="miniround"></div> the latest technology only here</p>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script type="application/x-javascript">
+    function checkBodySearch() {
+        onclick = document.getElementById("resSearch").style.display = 'block';
+        onclick = document.getElementById("resUpdate").style.display = 'none';
+        onclick = document.getElementById("resList").style.display = 'none';
+        onclick = document.getElementById("resBody").style.display = 'none';
+        onclick = document.getElementById("resAdd").style.display = 'none';
+        onclick = document.getElementById("resDelete").style.display = 'none';
+    }
+    function checkFormSearch(form){
+        var reg = new RegExp("^[a-zA-ZА-Яа-я]+$");
+        var name = document.getElementById("nameSearch").value;
+        var  surname = document.getElementById("surnameSearch").value;
+        if (name == ""|| surname == ""){
+            document.getElementById("errorLoginSearch").innerHTML="This field is not filled";
+            return false;
+        }
+        if((name.length <2 || name.length > 15) || (surname.length < 2 || surname.length > 15)){
+            document.getElementById("errorLoginSearch").innerHTML="Went beyond the meanings";
+            return false;
+        }
+        if(reg.test(name) == false || reg.test(surname) == false){
+            document.getElementById("errorLoginSearch").innerHTML="invalid value entry";
+            return false;
+        }
+        return true;
+    }
+    function checkSearch(srvUrl) {
+        if(checkFormSearch(form) == true){
+            onclick = document.getElementById("resSearchResult").style.display = 'block';
+            var form = document.getElementById("formSearch");
+            var worker = {};
+            for (var i = 0; i < form.elements.length; i++) {
+                if (form.elements[i].type == "text") {
+                    worker[form.elements[i].name] = form.elements[i].value;
+                }
+            }
+            var hrequest = new XMLHttpRequest();
+            var json = JSON.stringify(worker);
+            hrequest.open("POST",srvUrl,true);
+            hrequest.onreadystatechange = function () {
+                if(hrequest.status == 200){
+                    var jsonWorker = JSON.parse(hrequest.response);
+                    document.getElementById("nameSearchResult").innerHTML = jsonWorker.name;
+                    document.getElementById("surnameSearchResult").innerHTML = jsonWorker.surname;
+                    document.getElementById("typeWorkerSearchResult").innerHTML = jsonWorker.typeWorker;
+                }else {
+                    document.write("Ответ сервера" + hrequest.statusText);
+                }
+            };
+            hrequest.send(json);
+        }else{
+            return false;
+        }
+    }
+    function checkBodyUpdate(){
+        onclick = document.getElementById("resUpdate").style.display = 'block';
+        onclick = document.getElementById("resList").style.display = 'none';
+        onclick = document.getElementById("resBody").style.display = 'none';
+        onclick = document.getElementById("resAdd").style.display = 'none';
+        onclick = document.getElementById("resSearch").style.display = 'none';
+        onclick = document.getElementById("resDelete").style.display = 'none';
+    }
+    function checkFormSearchForm(form){
+        var reg = new RegExp("^[a-zA-ZА-Яа-я]+$");
+        var name = document.getElementById("nameSearchForm").value;
+        var  surname = document.getElementById("surnameSearchForm").value;
+        if (name == ""|| surname == ""){
+            document.getElementById("errorLoginSearchForm").innerHTML="This field is not filled";
+            return false;
+        }
+        if((name.length <2 || name.length > 15) || (surname.length <2 || surname.length > 15)){
+            document.getElementById("errorLoginSearchForm").innerHTML="Went beyond the meanings";
+            return false;
+        }
+        if(reg.test(name) == false || reg.test(surname) == false){
+            document.getElementById("errorLoginSearchForm").innerHTML="invalid value entry";
+            return false;
+        }
+        return true;
+    }
+    function checkSearchForm(srvUrl) {
+        if(checkFormSearchForm(form) == true){
+            onclick = document.getElementById("resUpdateResult").style.display = 'block';
+            var form = document.getElementById("formSearchForm");
+            var worker = {};
+            for (var i = 0; i < form.elements.length; i++) {
+                if (form.elements[i].type == "text") {
+                    worker[form.elements[i].name] = form.elements[i].value;
+                }
+            }
+            var hrequest = new XMLHttpRequest();
+            var json = JSON.stringify(worker);
+            hrequest.open("POST",srvUrl,true);
+            hrequest.onreadystatechange = function () {
+                if(hrequest.status == 200){
+                    var jsonWorker = JSON.parse(hrequest.response);
+                    document.getElementById("idWorkerUpdate").value = jsonWorker.idWorker;
+                    document.getElementById("namUpdate").value = jsonWorker.name;
+                    document.getElementById("surnameUpdate").value = jsonWorker.surname;
+                    document.getElementById("typeWorkerUpdate").value = jsonWorker.typeWorker;
+                }else {
+                    document.write("Ответ сервера" + hrequest.statusText);
+                }
+
+            };
+            hrequest.send(json);
+        }else{
+            return false;
+        }
+    }
+    function checkFormUpdate(form){
+        var reg = new RegExp("^[a-zA-ZА-Яа-я]+$");
+        var name = document.getElementById("namUpdate").value;
+        var  surname = document.getElementById("surnameUpdate").value;
+        var typeWorker = document.getElementById("typeWorkerUpdate").value;
+        if (name == ""|| surname == "" || typeWorker == ""){
+            document.getElementById("errorLoginUpdate").innerHTML="This field is not filled";
+            return false;
+        }
+        if((name.length <2 || name.length > 15) || (surname.length <2 || surname.length > 15)||(typeWorker.length <2 || typeWorker.length > 15)){
+            document.getElementById("errorLoginUpdate").innerHTML="Went beyond the meanings";
+            return false;
+        }
+        if(reg.test(name) == false || reg.test(surname) == false || reg.test(typeWorker) == false){
+            document.getElementById("errorLoginUpdate").innerHTML="invalid value entry";
+            return false;
+        }
+        return true;
+    }
+    function checkUpdate(srvUrl) {
+        if(checkFormUpdate(form) == true){
+            var mainForm = document.getElementById("formUpdate");
+            var worker = {};
+            for(var i =0; i<mainForm.elements.length;i++){
+                if(mainForm.elements[i].type== "text"){
+                    worker[mainForm.elements[i].name] = mainForm.elements[i].value;
+                }
+            }
+            var json = JSON.stringify(worker);
+            var hrequest = new XMLHttpRequest();
+            hrequest.open("POST",srvUrl,true);
+            hrequest.onreadystatechange = function () {
+                if(hrequest.status == 200){
+                    var jsons = JSON.parse(hrequest.response);
+                    document.getElementById("errorLoginUpdate").innerHTML=jsons;
+                }else {
+                    document.write("Ответ сервера" + hrequest.statusText);
+                }
+            };
+            hrequest.send(json);
+        }else {
+            return false;
+        }
+
+    }
+    function checkBodyDelete(){
+        onclick = document.getElementById("resDelete").style.display = 'block';
+        onclick = document.getElementById("resList").style.display = 'none';
+        onclick = document.getElementById("resBody").style.display = 'none';
+        onclick = document.getElementById("resAdd").style.display = 'none';
+        onclick = document.getElementById("resSearch").style.display = 'none';
+        onclick = document.getElementById("resUpdate").style.display = 'none';
+    }
+    function checkFormDeleteForm(form){
+        var reg = new RegExp("^[a-zA-ZА-Яа-я]+$");
+        var name = document.getElementById("nameDeleteForm").value;
+        var  surname = document.getElementById("surnameDeleteForm").value;
+        if (name == ""|| surname == ""){
+            document.getElementById("errorLoginDeleteForm").innerHTML="This field is not filled";
+            return false;
+        }
+        if((name.length <2 || name.length > 15) || (surname.length < 2 || surname.length > 15)){
+            document.getElementById("errorLoginDeleteForm").innerHTML="Went beyond the meanings";
+            return false;
+        }
+        if(reg.test(name) == false || reg.test(surname) == false){
+            document.getElementById("errorLoginDeleteForm").innerHTML="invalid value entry";
+            return false;
+        }
+        return true;
+    }
+    function checkDeleteForm(srvUrl) {
+        if(checkFormDeleteForm(form) == true){
+            var form = document.getElementById("formDeleteForm");
+            var worker = {};
+            for (var i = 0; i < form.elements.length; i++) {
+                if (form.elements[i].type == "text") {
+                    worker[form.elements[i].name] = form.elements[i].value;
+                }
+            }
+            var hrequest = new XMLHttpRequest();
+            var json = JSON.stringify(worker);
+            hrequest.open("POST",srvUrl,true);
+            hrequest.onreadystatechange = function () {
+                if(hrequest.status == 200){
+                    var jsons = JSON.parse(hrequest.response);
+                    document.getElementById("errorLoginDeleteForm").innerHTML=jsons;
+                }else {
+                    document.write("Ответ сервера" + hrequest.statusText);
+                }
+            };
+            hrequest.send(json);
+        }else{
+            return false;
+        }
+    }
+    function checkBodyReg(){
+        onclick = document.getElementById("resAdd").style.display = 'block';
+        onclick = document.getElementById("resList").style.display = 'none';
+        onclick = document.getElementById("resBody").style.display = 'none';
+        onclick = document.getElementById("resSearch").style.display = 'none';
+        onclick = document.getElementById("resDelete").style.display = 'none';
+        onclick = document.getElementById("resUpdate").style.display = 'none';
+    }
+    function checkFormAdd(form){
+        var reg = new RegExp("^[a-zA-ZА-Яа-я]+$");
+        var name = document.getElementById("nameAdd").value;
+        var  surname = document.getElementById("surnameAdd").value;
+        var typeWorker = document.getElementById("typeWorkerAdd").value;
+        if (name == ""|| surname == "" || typeWorker == ""){
+            document.getElementById("errorLoginAdd").innerHTML="This field is not filled";
+            return false;
+        }
+        if((name.length <2 || name.length > 15) || (surname.length < 2 || surname.length > 15)||(typeWorker.length <2 || typeWorker.length > 15)){
+            document.getElementById("errorLoginAdd").innerHTML="Went beyond the meanings";
+            return false;
+        }
+        if(reg.test(name) == false || reg.test(surname) == false || reg.test(typeWorker) == false){
+            document.getElementById("errorLoginAdd").innerHTML="invalid value entry";
+            return false;
+        }
+        return true;
+    }
+    function checkAdd(srvUrl) {
+        if(checkFormAdd(form) == true){
+            var form = document.getElementById("formAdd");
+            var worker = {};
+            for (var i = 0; i < form.elements.length; i++) {
+                if (form.elements[i].type == "text") {
+                    worker[form.elements[i].name] = form.elements[i].value;
+                }
+            }
+            var hrequest = new XMLHttpRequest();
+            var json = JSON.stringify(worker);
+            hrequest.open("POST",srvUrl,true);
+            hrequest.onreadystatechange = function () {
+                if(hrequest.status == 200){
+                    var jsons = JSON.parse(hrequest.response);
+                    document.getElementById("errorLoginAdd").innerHTML=jsons;
+                }else {
+                    document.write("Ответ сервера" + hrequest.statusText);
+                }
+            };
+            hrequest.send(json);
+        }else{
+            return false;
+        }
+    }
+    function checkBodyList(srvUrl){
+        onclick = document.getElementById("resBody").style.display = 'none';
+        onclick = document.getElementById("resList").style.display = 'block';
+        onclick = document.getElementById("resAdd").style.display = 'none';
+        onclick = document.getElementById("resSearch").style.display = 'none';
+        onclick = document.getElementById("resDelete").style.display = 'none';
+        onclick = document.getElementById("resUpdate").style.display = 'none';
+        var hrequest = new XMLHttpRequest();
+        hrequest.open("POST",srvUrl,true);
+        hrequest.onreadystatechange = function () {
+            if(hrequest.status == 200){
+                var js = JSON.parse(hrequest.response);
+                var  txt ="";
+                txt += "<table>";
+                var tht="",tqt ="";
+                for (var key in js){
+                    txt += "<tr><td>" + js[key].name + "</td></tr>";
+                }
+                txt += "</table>";
+                tht += "<table>";
+                for (var key in js){
+                    tht += "<tr><td>" + js[key].surname + "</td></tr>";
+                }
+                tht += "</table>";
+                tqt += "<table>";
+                for (var key in js){
+                    tqt += "<tr><td>" + js[key].typeWorker + "</td></tr>";
+                }
+                tqt += "</table>";
+                document.getElementById("nameWorker").innerHTML = txt;
+                document.getElementById("surnameWorker").innerHTML = tht;
+                document.getElementById("typeWorker").innerHTML = tqt;
+            }
+        };
+        hrequest.send();
+    }
+
+    function checkFormDelete(form){
+        var reg = new RegExp("^[a-zA-ZА-Яа-я]+$");
+        var name = document.getElementById("nameDelete").value;
+        var  surname = document.getElementById("surnameDelete").value;
+        var nameBrigade = document.getElementById("nameBrigadeDelete").value;
+        if (name == ""|| surname == "" || nameBrigade == ""){
+            document.getElementById("errorLoginDelete").innerHTML="This field is not filled";
+            return false;
+        }
+        if((name.length <2 || name.length > 15) || (surname.length < 2 || surname.length > 15)||(nameBrigade.length <2 || nameBrigade.length > 15)){
+            document.getElementById("errorLoginDelete").innerHTML="Went beyond the meanings";
+            return false;
+        }
+        if(reg.test(name) == false || reg.test(surname) == false || reg.test(nameBrigade) == false){
+            document.getElementById("errorLoginDelete").innerHTML="invalid value entry";
+            return false;
+        }
+        return true;
+    }
+    function checkDelete(srvUrl) {
+        if(checkFormDelete(form) == true){
+            var form = document.getElementById("formDelete");
+            var worker = {};
+            for (var i = 0; i < form.elements.length; i++) {
+                if (form.elements[i].type == "text") {
+                    worker[form.elements[i].name] = form.elements[i].value;
+                }
+            }
+            var hrequest = new XMLHttpRequest();
+            var json = JSON.stringify(worker);
+            hrequest.open("POST",srvUrl,true);
+            hrequest.onreadystatechange = function () {
+                if(hrequest.status == 200){
+                    var jsons = JSON.parse(hrequest.response);
+                    document.getElementById("errorLoginDelete").innerHTML=jsons;
+                }else {
+                    document.write("Ответ сервера" + hrequest.statusText);
+                }
+            };
+            hrequest.send(json);
+        }else{
+            return false;
+        }
+    }
+
+
+    function checkFormAddPlanWork(form){
+        var reg = new RegExp("^[a-zA-ZА-Яа-я]+$");
+        var name = document.getElementById("nameWorkerAddPlanWork").value;
+        var  surname = document.getElementById("surnameWorkerAddPlanWork").value;
+        if (name == ""|| surname == "" ){
+            document.getElementById("errorLoginAddPlanWork").innerHTML="This field is not filled";
+            return false;
+        }
+        if((name.length <2 || name.length > 15) || (surname.length < 2 || surname.length > 15)){
+            document.getElementById("errorLoginAddPlanWork").innerHTML="Went beyond the meanings";
+            return false;
+        }
+        if(reg.test(name) == false || reg.test(surname) == false){
+            document.getElementById("errorLoginAddPlanWork").innerHTML="invalid value entry";
+            return false;
+        }
+        return true;
+    }
+    function checkAddPlanWork(srvUrl) {
+        if(checkFormAddPlanWork(form) == true){
+            var form = document.getElementById("formAddPlanWork");
+            var worker = {};
+            for (var i = 0; i < form.elements.length; i++) {
+                if (form.elements[i].type == "text") {
+                    worker[form.elements[i].name] = form.elements[i].value;
+                }
+            }
+            var hrequest = new XMLHttpRequest();
+            var json = JSON.stringify(worker);
+            hrequest.open("POST",srvUrl,true);
+            hrequest.onreadystatechange = function () {
+                if(hrequest.status == 200){
+                    var jsons = JSON.parse(hrequest.response);
+                    document.getElementById("errorLoginAddPlanWork").innerHTML=jsons;
+                }else {
+                    document.write("Ответ сервера" + hrequest.statusText);
+                }
+            };
+            hrequest.send(json);
+        }else{
+            return false;
+        }
+    }
+</script>
+<style>
+    .outButton {
+        text-decoration: none;
+        outline: none;
+        display: inline-block;
+        color: white;
+        padding: 20px 30px;
+
+
+        border-radius: 10px;
+        font-family: 'Montserrat', sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        background-image: linear-gradient(to right, #9EEFE1 0%, #4830F0 51%, #9EEFE1 100%);
+        background-size: 200% auto;
+        box-shadow: 0 0 20px rgba(0,0,0,.1);
+        transition: .5s;
+    }
+    .outButton:hover {background-position: right center;}
+    .contentMain{
+        width: 1200px;
+        margin-left: 50px;
+
+    }
+    .mainmaxMain{
+        height: 1400px;
+    }
+
+    table {width: 100%; border-collapse: collapse;}
+    table thead tr {color: #ffffff; font-weight: bold; background: #00bf80;}
+    table thead tr td {border: 1px solid #01ab73;}
+    table tbody tr td {border: 1px solid #e8e9eb;}
+    table tbody tr:nth-child(2n) {background: #f4f4f4;}
+    table tbody tr:hover {background: #ebffe8;}
+    .header{
+        height: 700px;
+        background: #f3efe3;
+        border-top: 2px solid #eae6d8;
+        box-shadow: 0 10px 20px 10px rgba(0,0,0,0.1);
+    }
+    body{
+        margin: 0;
+    }
+    .menu{
+        height: 150px;
+        background: linear-gradient(to bottom, #eee, #fefefe);
+    }
+    .headermini{
+        height: 100px;
+        background: #f3efe3;
+        border-top: 2px solid #eae6d8;
+        box-shadow: 0 10px 20px 10px rgba(0,0,0,0.1);
+    }
+    h1{
+        font-size: 40px;
+    }
+    .main{
+        height: 400px;
+    }
+    .content{
+        width: 1000px;
+        margin:0 auto;
+        min-height: 50px;
+    }
+    .link{
+        padding-top: 35px;
+        height: 95px;
+        width: 1000px;
+        float: left;
+        text-align: right;
+    }
+    .headertext{
+        text-align: center;
+        font-size: 40px;
+        color:#888;
+    }
+    .divNext{
+        padding-top: 100px;
+        height: 300px;
+        width: 498px;
+        float: left;
+    }
+    .miniround{
+        height: 20px;
+        width: 20px;
+        background: #42a9f8;
+        border-radius: 50%;
+        float: left;
+        margin:-1px 15px 0 0;
+    }
+    .button{
+        padding:0 10px;
+        background: #42a9f8;
+        height: 40px;
+        min-width: 140px;
+        float: left;
+        border-radius: 20px;
+        color:white;
+        text-align: center;
+        line-height: 39px;
+    }
+    .button:hover{
+        background: #f84242;
+        cursor:pointer;
+    }
+    .input{
+        padding: 10px;
+        margin:10px;
+        width: 250px;
+        outline: none;
+        box-shadow:
+                inset 0 30px 30px -15px rgba(0,0,0,0.1);
+        border:1px solid #ddd;
+    }
+    .marginButton{
+        margin-left: 10px;
+    }
+
+</style>

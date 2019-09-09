@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Brigade Index</title>
+</head>
+<body>
+<div class="menu">
+    <div class="content">
+        <div class="link">
+            <form method="get" action="indexServlet" name="form">
+                <input type="submit" class="button marginButton" value="Home" />
+            </form>
+            <form method="post" action="" name="form">
+                <input type="button" class="button marginButton" value="Registration"onclick="checkBodyReg()" />
+            </form>
+            <form method="post" action="" name="form">
+                <input type="button" class="button marginButton" value="Search"onclick="checkBodySearch()" />
+            </form>
+            <form method="post" action="" name="form">
+                <input type="button" class="button marginButton" value="Delete"onclick="checkBodyDelete()" />
+            </form>
+            <form method="post" action="" name="form">
+                <input type="button" class="button marginButton" value="Update"onclick="checkBodyUpdate()" />
+            </form>
+            <form method="post" action="" name="form">
+                <input type="button" class="button marginButton" value="List" onclick="checkBodyList('brigadeListServlet')" />
+            </form>
+        </div>
+    </div>
+    <form method="post" action="userOutServlet" name="form">
+        <input type="submit" class="outButton" value="Exit" />
+    </form>
+</div>
+<div class="header" id="resBody">
+    <div class="content">
+        <h1 class="headertext">
+            Brigade
+            <span style="color: #555; ">page</span> &
+            <span style="color: #555; ">What</span>
+            would you like to do
+        </h1>
+    </div>
+</div>
+<div id="resList" style="display: none;">
+    <div class="headermini">
+        <div class="content">
+            <h1>Brigade List</h1>
+        </div>
+    </div>
+    <div class="mainmaxMain" >
+        <div class="contentMain" >
+            <table>
+                <tr>
+                    <th>nameBrigade</th>
+                    <th>List Worker in Brigade</th>
+                    <th>addPlanWork</th>
+                </tr>
+                <tr >
+                    <th id="nameBrigadeName"> </th>
+                    <th>
+                        <form method="post" action="" id="formList" name="form" onsubmit="return checkFormListWork(this)">
+                            <input value="" type="text" class="input" id="nameBrigadesListWork" name="nameBrigade" placeholder="nameBrigade"><br>
+                            <input type="button" value="ListWorking" class="button marginButton" onclick="checkListWork('brigadeListWorkingServlet')"  />
+                        </form>
+                        <p id='errorLoginListWork' class='error'></p>
+                    </th>
+                    <th>
+                        <form method="post" action="" name="form" id="formAddWork" onsubmit="return checkFormAddWork(this)">
+                            <input value="" type="text" class="input" id="nameBrigadeAddWork" name="nameBrigade" placeholder="nameBrigade"><br>
+                            <input value="" type="text" class="input" id="typeRequestAddWork" name="typeRequest" placeholder="typeRequest"><br>
+                            <input value="" type="text" class="input" id="addressAddWork" name="address" placeholder="address"><br>
+                            <input type="button" class="button marginButton" value="AddPlanWork" onclick="checkAddWork('brigadeAddPlanWorkServlet')" />
+                        </form>
+                        <p id='errorLoginAddWork' class='error'></p>
+                    </th>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="divNext"></div>
+    <div class="divNext">
+    </div>
+</div>
+
+
+<div id="resListWorker" style="display: none;" >
+    <div class="headermini">
+        <div class="content">
+            <h1>Worker List</h1>
+
+        </div>
+    </div>
+    <div class="mainmaxMain" >
+        <div class="contentMain" >
+            <table>  <tr>
+                <th>name</th>
+                <th>surname</th>
+                <th>typeWorker</th>
+                <th>deleteWorking witch Brigade</th>
+            </tr>
+
+                <tr>
+                    <th><p id="names"></p></th>
+                    <th><p id="surnames"></p></th>
+                    <th><p id="typeWorkers"></p></th>
+                    <th>
+                        <form method="post" action="" name="form" id="formDeleteBrigade" onsubmit="return checkFormDeleteBrigade(this)">
+                            <input value="" type="text" class="input" id="nameWorkerDeleteBrigade" name="name" placeholder="name"><br>
+                            <input value="" type="text" class="input" id="surnameWorkerDeleteBrigade" name="surname" placeholder="surname"><br>
+                            <input type="button" value="Delete" class="button marginButton" onclick="checkDeleteBrigade('workerDeleteBrigadeServlet')" />
+                        </form>
+                        <p id='errorLoginDeleteBrigade' class='error'></p>
+                    </th>
+
+            </table>
+        </div>
+    </div>
+</div >
+
+<div id="resRegBrigade" style="display: none;">
+    <div class="headermini">
+        <div class="content">
+            <h1>Brigade Registration</h1>
+        </div>
+    </div>
+    <div class="mainmax">
+        <div class="content">
+            <div class="divNext"></div>
+            <div class="divNext">
+    <form method="post" action="" name="form" id="formAddBrigade" onsubmit="return checkFormAddBrigade(this)">
+        <input value="" type="text" class="input" id="nameBrigadeAddBrigade" name="nameBrigade" placeholder="nameBrigade"><br>
+        <input type="button" class="button marginButton" value="ADD" onclick="checkAddBrigade('brigadeAddServlet')" />
+    </form>
+    <p id='errorLoginAddBrigade' class='error'></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="resSearchBrigade" style="display: none;" >
+    <div class="headermini" >
+        <div class="content">
+            <h1>Brigade Search</h1>
+        </div>
+    </div>
+    <div class="mainmax">
+        <div class="content">
+            <div class="divNext"></div>
+            <div class="divNext">
+    <div id="resSearchBrigadeTwo">
+        <form method="post" action="" name="form" id="formSearchBrigade" onsubmit="return checkFormSearchBrigade(this)">
+            <input value="" type="text" class="input" id="nameBrigadeSearchBrigade" name="nameBrigade" placeholder="nameBrigade"><br>
+            <input type="button" class="button marginButton" value="Search" onclick="checkSearchBrigade('brigadeSearchTwoServlet')" />
+        </form>
+        <p id='errorLoginSearchBrigade' class='error'></p>
+    </div>
+</div>
+</div>
+    </div>
+    <div id="resSearchBrigadeForm" style="display: none;" >
+        <div class="mainmax">
+            <div class="content">
+                <div class="divNext"></div>
+                <div class="divNext">
+        <div class="divNext">
+            <table class="input">
+                <th align="left"><span style="color: blue; "></span><strong>Name Brigade<div id="nameBrigadesSearchBrigadeForm"></div></id></strong> </th>
+            </table>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="resDeleteBrigade" style="display: none;">
+    <div class="headermini">
+        <div class="content">
+            <h1>Brigade Delete</h1>
+        </div>
+    </div>
+    <div class="mainmax">
+        <div class="content">
+            <div class="divNext"></div>
+            <div class="divNext">
+    <form method="post" action="" name="form" id="formDeleteBrigadeForm" onsubmit="return checkFormDeleteBrForm(this)">
+        <input value="" type="text" class="input" id="nameBrigadeDeleteBrigadeForm" name="nameBrigade" placeholder="nameBrigade"><br>
+        <input type="button" class="button marginButton" value="Delete" onclick="checkDeleteBrForm('brigadeDeleteServlet')" />
+    </form>
+    <p id='errorLoginDeleteBrForm' class='error'></p>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="resUpdateBrig" style="display: none;">
+    <div class="headermini">
+        <div class="content">
+            <h1>Brigade Update</h1>
+        </div>
+    </div>
+    <div class="mainmax">
+        <div class="content">
+            <div class="divNext"></div>
+            <div class="divNext">
+    <div id="resUpdateBrigade">
+        <form method="post" action="" name="form" id="formSearchBrig" onsubmit="return checkFormSearchForm(this)">
+            <input value="" type="text" class="input" id="nameBrigadeUpdateBrigade" name="nameBrigade" placeholder="nameBrigade"><br>
+            <input type="button" class="button marginButton" value="Search" onclick="checkSearchForm('brigadeSearchTwoServlet')" />
+        </form>
+        <p id='errorLoginSearchFormSearch' class='error'></p>
+    </div>
+</div>
+</div>
+    </div>
+
+    <div id="resUpdateForm" style="display: none;">
+        <div class="mainmax">
+            <div class="content">
+                <div class="divNext"></div>
+                <div class="divNext">
+        <form method="post" action="" name="form" id="formUpdateBrig" onsubmit="return checkFormUpdateForm(this)">
+            <p>serial number</p> <input value="" disabled type="text" class="input" id="idBrigadeUpdate" name="idBrigade" placeholder="idBrigade"><br>
+            <p>nameBrigade</p>  <input value="" type="text" class="input" id="nameBrigadeUpdateForm" name="nameBrigade" placeholder="nameBrigade"><br>
+            <input type="button" class="button marginButton" value="Update"  onclick="checkUpdateForm('brigadeUpdateServlet')" />
+        </form>
+                    <p id='errorLoginSearchForm' class='error'></p>
+    </div>
+</div>
+</div>
+    </div>
+
+
+</div>
+<div class="main">
+    <div class="content">
+        <div class="divNext">
+            <p><div class="miniround"></div> the latest technology</p>
+            <p><div class="miniround"></div> the best workers</p>
+            <p><div class="miniround"></div> the fastest service</p>
+            <p><div class="miniround"></div> the latest technology only here</p>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>
+<script type="application/x-javascript" charset="UTF-8">
+    function checkFormAddWork(form){
+        var reg = new RegExp("^[a-zA-ZА-Яа-я]+$");
+        var typeRequest = document.getElementById("typeRequestAddWork").value;
+        var address = document.getElementById("addressAddWork").value;
+        var nameBrigade = document.getElementById("nameBrigadeAddWork").value;
+        if (typeRequest == "" && address == "" && nameBrigade == ""){
+            document.getElementById("errorLoginAddWork").innerHTML="This field is not filled";
+            return false;
+        }
+        if((typeRequest.length <2 || typeRequest.length > 15)||(address.length <2 || address.length > 15)||(nameBrigade.length <2 || nameBrigade.length > 15)){
+            document.getElementById("errorLoginAddWork").innerHTML="Went beyond the meanings";
+            return false;
+        }
+        if(reg.test(typeRequest) == false || reg.test(address) == false || reg.test(nameBrigade) == false ){
+            document.getElementById("errorLoginAddWork").innerHTML="invalid value entry";
+            return false;
+        }
+        return true;
+    }
+   function checkAddWork(srvUrl) {
+        if(checkFormAddWork(form) == true){
+            var form = document.getElementById("formAddWork");
+            var  brigade = {};
+            for (var i =0;i<form.elements.length;i++){
+                if(form.elements[i].type == "text"){
+                    brigade[form.elements[i].name] = form.elements[i].value;
+                }
+            }
+            var  hrequest = new XMLHttpRequest();
+            var json = JSON.stringify(brigade);
+            hrequest.open("POST",srvUrl,true);
+            hrequest.onreadystatechange = function () {
+                if (hrequest.status == 200) {
+                    var js = JSON.parse(hrequest.response);
+                    document.getElementById("errorLoginAddWork").innerHTML = js;
+                }
+            };
+            hrequest.send(json);
+        }else {
+            return false;
+        }
+    }
+   function checkFormListWork(form){
+        var reg = new RegExp("^[a-zA-ZА-Яа-я]+$");
+        var nameBrigade = document.getElementById("nameBrigadesListWork").value;
+        if (nameBrigade == ""){
+            document.getElementById("errorLoginListWork").innerHTML="This field is not filled";
+            return false;
+        }
+        if(nameBrigade.length <2 || nameBrigade.length > 15){
+            document.getElementById("errorLoginListWork").innerHTML="Went beyond the meanings";
+            return false;
+        }
+        if( reg.test(nameBrigade) == false ){
+            document.getElementById("errorLoginListWork").innerHTML="invalid value entry";
+            return false;
+        }
+        return true;
+    }
+    function checkListWork(srvUrl) {
+        if(checkFormListWork(form) == true){
+            onclick = document.getElementById("resList").style.display = 'none';
+            onclick = document.getElementById("resRegBrigade").style.display = 'none';
+            onclick = document.getElementById("resListWorker").style.display = 'block';
+            onclick = document.getElementById("resBody").style.display = 'none';
+            onclick = document.getElementById("resSearchBrigade").style.display = 'none';
+            onclick = document.getElementById("resDeleteBrigade").style.display = 'none';
+            onclick = document.getElementById("resUpdateBrig").style.display = 'none';
+            var form = document.getElementById("form1");
+            var  brigade = {};
+            for (var i =0;i<form.elements.length;i++){
+                if(form.elements[i].type == "text"){
+                    brigade[form.elements[i].name] = form.elements[i].value;
+                }
+            }
+            var  hrequest = new XMLHttpRequest();
+            var json = JSON.stringify(brigade);
+            hrequest.open("POST",srvUrl,true);
+            hrequest.onreadystatechange = function () {
+                if (hrequest.status == 200) {
+                    var js = JSON.parse(hrequest.response);
+                    var txt1 = "";
+                    if(js != null){
+                        txt1 += "<table>";
+                        var txt2="",txt3 ="", txt4 = "";
+                        for (var key in js){
+                            txt1 += "<tr><td>" + js[key].name + "</td></tr>";
+                        }
+                        txt1 += "</table>";
+                        txt2 += "<table>";
+                        for (var key in js){
+                            txt2 += "<tr><td>" + js[key].surname + "</td></tr>";
+                        }
+                        txt2 += "</table>";
+                        txt3 += "<table>";
+                        for (var key in js){
+                            txt3 += "<tr><td>" + js[key].typeWorker + "</td></tr>";
+                        }
+                        txt3 += "</table>";
+                        document.getElementById("names").innerHTML = txt1;
+                        document.getElementById("surnames").innerHTML = txt2;
+                        document.getElementById("typeWorkers").innerHTML = txt3;
+                    }else {
+                        document.getElementById("errorLoginDeleteBrigade").innerHTML = "ListWorker empty";
+                    }
+
+                }
+            };
+            hrequest.send(json);
+        }else {
+            return false;
+        }
+    }
+    function checkFormDeleteBrigade(form){
+        var reg = new RegExp("^[a-zA-ZА-Яа-я]+$");
+        var name = document.getElementById("nameWorkerDeleteBrigade").value;
+        var surname = document.getElementById("surnameWorkerDeleteBrigade").value;
+        if (name == "" && surname == "" ){
+            document.getElementById("errorLoginDeleteBrigade").innerHTML="This field is not filled";
+            return false;
+        }
+        if((name.length <2 || name.length > 15)||(surname.length <2 || surname.length > 15)){
+            document.getElementById("errorLoginDeleteBrigade").innerHTML="Went beyond the meanings";
+            return false;
+        }
+        if(reg.test(name) == false || reg.test(surname) == false){
+            document.getElementById("errorLoginDeleteBrigade").innerHTML="invalid value entry";
+            return false;
+        }
+        return true;
+    }
+    function checkDeleteBrigade(srvUrl) {
+        if(checkFormDeleteBrigade(form) == true){
+            var form = document.getElementById("formDeleteBrigade");
+            var  brigade = {};
+            for (var i =0;i<form.elements.length;i++){
+                if(form.elements[i].type == "text"){
+                    brigade[form.elements[i].name] = form.elements[i].value;
+                }
+            }
+            var  hrequest = new XMLHttpRequest();
+            var json = JSON.stringify(brigade);
+            hrequest.open("POST",srvUrl,true);
+            hrequest.onreadystatechange = function () {
+                if (hrequest.status == 200) {
+                    var js = JSON.parse(hrequest.response);
+                    document.getElementById("errorLoginDeleteBrigade").innerHTML = js;
+                }
+            };
+            hrequest.send(json);
+        }else {
+            return false;
+        }
+    }
+  function checkBodyReg(){
+        onclick = document.getElementById("resRegBrigade").style.display = 'block';
+        onclick = document.getElementById("resList").style.display = 'none';
+        onclick = document.getElementById("resListWorker").style.display = 'none';
+        onclick = document.getElementById("resBody").style.display = 'none';
+        onclick = document.getElementById("resSearchBrigade").style.display = 'none';
+        onclick = document.getElementById("resDeleteBrigade").style.display = 'none';
+        onclick = document.getElementById("resUpdateBrig").style.display = 'none';
+    }
+   function checkBodySearch(){
+        onclick = document.getElementById("resSearchBrigade").style.display = 'block';
+        onclick = document.getElementById("resList").style.display = 'none';
+        onclick = document.getElementById("resListWorker").style.display = 'none';
+        onclick = document.getElementById("resBody").style.display = 'none';
+        onclick = document.getElementById("resRegBrigade").style.display = 'none';
+        onclick = document.getElementById("resDeleteBrigade").style.display = 'none';
+        onclick = document.getElementById("resUpdateBrig").style.display = 'none';
+    }
+    function checkBodyDelete(){
+        onclick = document.getElementById("resDeleteBrigade").style.display = 'block';
+        onclick = document.getElementById("resList").style.display = 'none';
+        onclick = document.getElementById("resListWorker").style.display = 'none';
+        onclick = document.getElementById("resBody").style.display = 'none';
+        onclick = document.getElementById("resRegBrigade").style.display = 'none';
+        onclick = document.getElementById("resSearchBrigade").style.display = 'none';
+        onclick = document.getElementById("resUpdateBrig").style.display = 'none';
+
+    }
+     function checkBodyUpdate(){
+        onclick = document.getElementById("resUpdateBrig").style.display = 'block';
+        onclick = document.getElementById("resList").style.display = 'none';
+        onclick = document.getElementById("resListWorker").style.display = 'none';
+        onclick = document.getElementById("resBody").style.display = 'none';
+        onclick = document.getElementById("resRegBrigade").style.display = 'none';
+        onclick = document.getElementById("resSearchBrigade").style.display = 'none';
+        onclick = document.getElementById("resDeleteBrigade").style.display = 'none';
+    }
+    function checkBodyList(srvUrl){
+        var  txt ="";
+        onclick = document.getElementById("resBody").style.display = 'none';
+        onclick = document.getElementById("resList").style.display = 'block';
+        onclick = document.getElementById("resListWorker").style.display = 'none';
+        onclick = document.getElementById("resRegBrigade").style.display = 'none';
+        onclick = document.getElementById("resSearchBrigade").style.display = 'none';
+        onclick = document.getElementById("resDeleteBrigade").style.display = 'none';
+        onclick = document.getElementById("resUpdateBrig").style.display = 'none';
+        var hrequest = new XMLHttpRequest();
+        hrequest.open("POST",srvUrl,true);
+        hrequest.onreadystatechange = function () {
+            if(hrequest.status == 200){
+                var js = JSON.parse(hrequest.response);
+                txt += "<table>";
+                for (var key in js){
+                    txt += "<tr><td>" + js[key].nameBrigade + "</td></tr>";
+                }
+                txt += "</table>";
+                document.getElementById("nameBrigadeName").innerHTML = txt;
+            }
+        };
+        hrequest.send();
+    }
+
+    function checkFormSearchForm(form){
+        onclick = document.getElementById("resUpdateForm").style.display = 'block';
+        var reg = new RegExp("^[a-zA-ZА-Яа-я]+$");
+        var nameBrigade = document.getElementById("nameBrigadeUpdateBrigade").value;
+        if (nameBrigade == ""){
+            document.getElementById("errorLoginSearchFormSearch").innerHTML="This field is not filled";
+            return false;
+        }
+        if(nameBrigade.length <2 || nameBrigade.length > 15){
+            document.getElementById("errorLoginSearchFormSearch").innerHTML="Went beyond the meanings";
+            return false;
+        }
+        if(reg.test(nameBrigade) == false ){
+            document.getElementById("errorLoginSearchFormSearch").innerHTML="invalid value entry";
+            return false;
+        }
+        return true;
+    }
+    function checkSearchForm(srvUrl) {
+        if(checkFormSearchForm(form) == true){
+            var form = document.getElementById("formSearchBrig");
+            var brigade = {};
+            for (var i =0;i<form.elements.length;i++){
+                if(form.elements[i].type == "text"){
+                    brigade[form.elements[i].name]=form.elements[i].value;
+                }
+            }
+            var json =JSON.stringify(brigade);
+            var hrequest = new XMLHttpRequest();
+            hrequest.open("POST",srvUrl,true);
+            hrequest.onreadystatechange = function (){
+                if(hrequest.status == 200){
+                    var cur = JSON.parse(hrequest.response);
+                    document.getElementById("idBrigadeUpdate").value = cur.idBrigade;
+                    document.getElementById("nameBrigadeUpdateForm").value = cur.nameBrigade;
+                }
+            };
+            hrequest.send(json);
+        }else {
+            return false;
+        }
+    }
+    function checkFormUpdateForm(form){
+        var reg = new RegExp("^[a-zA-ZА-Яа-я]+$");
+        var nameBrigade = document.getElementById("nameBrigadeUpdateForm").value;
+        if (nameBrigade === ""){
+            document.getElementById("errorLoginSearchForm").innerHTML="This field is not filled";
+            return false;
+        }
+        if(nameBrigade.length <2 || nameBrigade.length > 15){
+            document.getElementById("errorLoginSearchForm").innerHTML="Went beyond the meanings";
+            return false;
+        }
+        if(reg.test(nameBrigade) === false ){
+            document.getElementById("errorLoginSearchForm").innerHTML="invalid value entry";
+            return false;
+        }
+        return true;
+    }
+    function checkUpdateForm(srvUrl) {
+        if(checkFormUpdateForm(form) == true){
+            var form = document.getElementById("formUpdateBrig");
+            var brigade = {};
+            for (var i =0;i<form.elements.length;i++){
+                if(form.elements[i].type == "text"){
+                    brigade[form.elements[i].name]=form.elements[i].value;
+                }
+            }
+            var json =JSON.stringify(brigade);
+            var hrequest = new XMLHttpRequest();
+            hrequest.open("POST",srvUrl,true);
+            hrequest.onreadystatechange = function (){
+                if(hrequest.status == 200){
+                    var cur = JSON.parse(hrequest.response);
+                    document.getElementById("errorLoginSearchForm").innerHTML=cur;
+                }
+            };
+            hrequest.send(json);
+        }else {
+            return false;
+        }
+    }
+    function checkFormSearchBrigade(form){
+        var reg = new RegExp("^[a-zA-ZА-Яа-я]+$");
+        var nameBrigade = document.getElementById("nameBrigadeSearchBrigade").value;
+        if (nameBrigade == ""){
+            document.getElementById("errorLoginSearchBrigade").innerHTML="This field is not filled";
+            return false;
+        }
+        if(nameBrigade.length <2 || nameBrigade.length > 15){
+            document.getElementById("errorLoginSearchBrigade").innerHTML="Went beyond the meanings";
+            return false;
+        }
+        if(reg.test(nameBrigade) == false ){
+            document.getElementById("errorLoginSearchBrigade").innerHTML="invalid value entry";
+            return false;
+        }
+        return true;
+    }
+    function checkSearchBrigade(srvUrl) {
+        onclick = document.getElementById("resBody").style.display = 'none';
+        onclick = document.getElementById("resSearchBrigadeForm").style.display = 'block';
+        onclick = document.getElementById("resSearchBrigadeTwo").style.display = 'block';
+        onclick = document.getElementById("resList").style.display = 'none';
+        onclick = document.getElementById("resListWorker").style.display = 'none';
+        onclick = document.getElementById("resRegBrigade").style.display = 'none';
+        onclick = document.getElementById("resSearchBrigade").style.display = 'block';
+        onclick = document.getElementById("resDeleteBrigade").style.display = 'none';
+        onclick = document.getElementById("resUpdateBrig").style.display = 'none';
+        if(checkFormSearchBrigade(form) == true){
+            var form = document.getElementById("formSearchBrigade");
+            var brigade = {};
+            for (var i =0;i<form.elements.length;i++){
+                if(form.elements[i].type == "text"){
+                    brigade[form.elements[i].name] = form.elements[i].value;
+                }
+            }
+            var req = new XMLHttpRequest();
+            var json = JSON.stringify(brigade);
+            req.open("POST",srvUrl,true);
+            req.onreadystatechange = function () {
+                if(req.status == 200){
+                    var  jsBrigade = JSON.parse(req.response);
+                    document.getElementById("nameBrigadesSearchBrigadeForm").innerHTML = jsBrigade.nameBrigade;
+                }else {
+                    document.write("Ответ сервера" + req.statusText);
+                }
+            };
+            req.send(json);
+        }else {
+            return false;
+        }
+    }
+    function checkFormAddBrigade(form){
+        var reg = new RegExp("^[a-zA-ZА-Яа-я]+$");
+        var nameBrigade = document.getElementById("nameBrigadeAddBrigade").value;
+        if (nameBrigade == ""){
+            document.getElementById("errorLoginAddBrigade").innerHTML="This field is not filled";
+            return false;
+        }
+        if(nameBrigade.length <2 || nameBrigade.length > 15){
+            document.getElementById("errorLoginAddBrigade").innerHTML="Went beyond the meanings";
+            return false;
+        }
+        if(reg.test(nameBrigade) == false ){
+            document.getElementById("errorLoginAddBrigade").innerHTML="invalid value entry";
+            return false;
+        }
+        return true;
+    }
+    function checkAddBrigade(srvUrl) {
+        if(checkFormAddBrigade(form) == true){
+            var form = document.getElementById("formAddBrigade");
+            var brigade = {};
+            for (var i =0;i<form.elements.length;i++){
+                if(form.elements[i].type == "text"){
+                    brigade[form.elements[i].name] = form.elements[i].value;
+                }
+            }
+            var hrequest = new XMLHttpRequest();
+            var json = JSON.stringify(brigade);
+            hrequest.open("POST",srvUrl,true);
+            hrequest.onreadystatechange = function () {
+                if(hrequest.status == 200){
+                    var js = JSON.parse(hrequest.response);
+                    document.getElementById("errorLoginAddBrigade").innerHTML=js;
+
+                }
+            };
+            hrequest.send(json);
+        }else {
+            return false;
+        }
+    }
+    function checkFormDeleteBrForm(form){
+        var reg = new RegExp("^[a-zA-ZА-Яа-я]+$");
+        var nameBrigade = document.getElementById("nameBrigadeDeleteBrigadeForm").value;
+        if (nameBrigade == ""){
+            document.getElementById("errorLoginDeleteBrForm").innerHTML="This field is not filled";
+            return false;
+        }
+        if(nameBrigade.length <2 || nameBrigade.length > 15){
+            document.getElementById("errorLoginDeleteBrForm").innerHTML="Went beyond the meanings";
+            return false;
+        }
+        if(reg.test(nameBrigade) == false ){
+            document.getElementById("errorLoginDeleteBrForm").innerHTML="invalid value entry";
+            return false;
+        }
+        return true;
+    }
+    function checkDeleteBrForm(srvUrl) {
+        if(checkFormDeleteBrForm(form) == true){
+            var form = document.getElementById("formDeleteBrigadeForm");
+            var brigade = {};
+            for (var i =0;i<form.elements.length;i++){
+                if(form.elements[i].type == "text"){
+                    brigade[form.elements[i].name] = form.elements[i].value;
+                }
+            }
+            var hrequest = new XMLHttpRequest();
+            var json = JSON.stringify(brigade);
+            hrequest.open("POST",srvUrl,true);
+            hrequest.onreadystatechange = function () {
+                if(hrequest.status == 200){
+                    var js = JSON.parse(hrequest.response);
+
+                    document.getElementById("errorLoginDeleteBrForm").innerHTML=js;
+                }
+            };
+            hrequest.send(json);
+        }else {
+            return false;
+        }
+    }
+</script>
+<style>
+    .outButton {
+        text-decoration: none;
+        outline: none;
+        display: inline-block;
+        color: white;
+        padding: 20px 30px;
+        border-radius: 10px;
+        font-family: 'Montserrat', sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        background-image: linear-gradient(to right, #9EEFE1 0%, #4830F0 51%, #9EEFE1 100%);
+        background-size: 200% auto;
+        box-shadow: 0 0 20px rgba(0,0,0,.1);
+        transition: .5s;
+    }
+    .outButton:hover {background-position: right center;}
+    .contentMain{
+        width: 1200px;
+        margin-left: 50px;
+
+    }
+    .mainmaxMain{
+        height: 1400px;
+    }
+
+    table {width: 100%; border-collapse: collapse;}
+    table thead tr {color: #ffffff; font-weight: bold; background: #00bf80;}
+    table thead tr td {border: 1px solid #01ab73;}
+    table tbody tr td {border: 1px solid #e8e9eb;}
+    table tbody tr:nth-child(2n) {background: #f4f4f4;}
+    table tbody tr:hover {background: #ebffe8;}
+
+
+    .header{
+        height: 700px;
+        background: #f3efe3;
+        border-top: 2px solid #eae6d8;
+        box-shadow: 0 10px 20px 10px rgba(0,0,0,0.1);
+    }
+    body{
+        margin: 0;
+    }
+    .menu{
+        height: 150px;
+        background: linear-gradient(to bottom, #eee, #fefefe);
+    }
+    .headermini{
+        height: 100px;
+        background: #f3efe3;
+        border-top: 2px solid #eae6d8;
+        box-shadow: 0 10px 20px 10px rgba(0,0,0,0.1);
+    }
+    h1{
+        font-size: 40px;
+    }
+    .main{
+        height: 400px;
+    }
+    .content{
+        width: 1000px;
+        margin:0 auto;
+        min-height: 50px;
+    }
+    .link{
+        padding-top: 35px;
+        height: 95px;
+        width: 1000px;
+        float: left;
+        text-align: right;
+    }
+    .headertext{
+        text-align: center;
+        font-size: 40px;
+        color:#888;
+    }
+    .divNext{
+        padding-top: 100px;
+        height: 300px;
+        width: 498px;
+        float: left;
+    }
+    .miniround{
+        height: 20px;
+        width: 20px;
+        background: #42a9f8;
+        border-radius: 50%;
+        float: left;
+        margin:-1px 15px 0 0;
+    }
+    .button{
+        padding:0 10px;
+        background: #42a9f8;
+        height: 40px;
+        min-width: 140px;
+        float: left;
+        border-radius: 20px;
+        color:white;
+        text-align: center;
+        line-height: 39px;
+    }
+    .button:hover{
+        background: #f84242;
+        cursor:pointer;
+    }
+    .input{
+        padding: 10px;
+        margin:10px;
+        width: 250px;
+        outline: none;
+        box-shadow:
+                inset 0 30px 30px -15px rgba(0,0,0,0.1);
+        border:1px solid #ddd;
+    }
+    .marginButton{
+        margin-left: 10px;
+    }
+</style>

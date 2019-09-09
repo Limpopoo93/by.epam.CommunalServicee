@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Index Dispatcher</title>
+</head>
+<body>
+<div class="menu">
+    <div class="content">
+        <div class="link">
+            <form method="get" action="indexServlet" name="form">
+                <input type="submit" class="button marginButton" value="Home" />
+            </form>
+            <form method="get" action="userIndexServlet" name="form">
+                <input type="submit" class="button marginButton" value="User"/>
+            </form>
+            <form method="get" action="requestIndexServlet" name="form">
+                <input type="submit" class="button marginButton" value="Request" />
+            </form>
+            <form method="get" action="workerIndexServlet" name="form">
+                <input type="submit" class="button marginButton" value="Worker" />
+            </form>
+            <form method="post" action="" name="form">
+                <input type="button" class="button marginButton" value="PlanWork" onclick="checkBodyReg('planWorkServlet')" />
+            </form>
+            <form method="get" action="brigadeIndexServlet" name="form">
+                <input type="submit" class="button marginButton" value="Brigade" />
+            </form>
+        </div>
+    </div>
+    <form method="post" action="userOutServlet" name="form">
+        <input type="submit" class="outButton" value="Exit" />
+    </form>
+</div>
+<div class="header" id="resList" >
+    <div class="content">
+        <h1 class="headertext">
+            CommunalService
+            <span style="color: #555; ">page</span> &
+            <span style="color: #555; ">What</span>
+            would you like to do
+        </h1>
+    </div>
+</div>
+<div id="resListWorker" style="display: none;" >
+    <div class="headermini">
+        <div class="content">
+            <h1>PlanWork List</h1>
+
+        </div>
+    </div>
+    <div class="mainmaxMain">
+        <div class="contentMain">
+            <table>  <tr>
+                <th>typeRequest</th>
+                <th>scale</th>
+                <th>dateFinish</th>
+                <th>address</th>
+                <th>state Request</th>
+                <th>ListWorking</th>
+                <th>function Request ready</th>
+            </tr>
+
+                <tr>
+                    <th id="typeRequest"></th>
+                    <th id="scale"></th>
+                    <th id="dateFinish"></th>
+                    <th id="address"></th>
+                    <th id="stateRequest"></th>
+                    <th>
+                        <form method="post" action="" id="formDelete" name="form" onsubmit="return checkFormDelete(this)">
+                            <input value="" type="text" class="input" id="nameBrigadesDelete" name="nameBrigade" placeholder="nameBrigade"><br>
+                            <input type="button" value="ListWorking" class="button marginButton" onclick="checkDelete('brigadeListWorkingServlet')"  />
+                        </form>
+                        <p id='errorLoginDelete' class='error'></p>
+                    </th>
+                    <th>
+
+                        <form method="post" action="" id="formAddPlanWork"  name="form" onsubmit="return checkFormAddPlanWork(this)">
+                            <input value="" type="text" class="input" id="typeRequestAddPlanWork" name="typeRequest" placeholder="typeRequest"><br>
+                            <input value="" type="text" class="input" id="addressAddPlanWork" name="address" placeholder="address"><br>
+                            <input type="button" value="Request ready" class="button marginButton" onclick="checkAddPlanWork('requestReadyServlet')"  />
+                        </form>
+                        <p id='errorLoginAddPlanWork' class='error'></p>
+                    </th>
+
+            </table>
+        </div>
+    </div>
+</div>
+<div id="resBody" style="display: none;" >
+    <div class="headermini">
+        <div class="content">
+            <h1>Worker List</h1>
+
+        </div>
+    </div>
+    <div class="mainmaxMain" >
+        <div class="contentMain" >
+            <table>  <tr>
+                <th>name</th>
+                <th>surname</th>
+                <th>typeWorker</th>
+                <th>deleteWorking witch Brigade</th>
+            </tr>
+
+                <tr>
+                    <th><p id="names"></p></th>
+                    <th><p id="surnames"></p></th>
+                    <th><p id="typeWorkers"></p></th>
+                    <th>
+                        <form method="post" action="" name="form" id="formDeleteCheck" onsubmit="return checkFormDeleteCheck(this)">
+                            <input value="" type="text" class="input" id="nameWorkerDeleteCheck" name="name" placeholder="name"><br>
+                            <input value="" type="text" class="input" id="surnameWorkerDeleteCheck" name="surname" placeholder="surname"><br>
+                            <input type="button" value="Delete" class="button marginButton" onclick="checkDeleteCheck('workerDeleteBrigadeServlet')" />
+                        </form>
+                        <p id='errorLoginDeleteCheck' class='error'></p>
+                    </th>
+
+            </table>
+        </div>
+    </div>
+</div >
+<div class="main">
+    <div class="content">
+        <div class="divNext">
+            <p><div class="miniround"></div> the latest technology</p>
+            <p><div class="miniround"></div> the best workers</p>
+            <p><div class="miniround"></div> the fastest service</p>
+            <p><div class="miniround"></div> the latest technology only here</p>
+        </div>
+    </div>
+</div>
+    </div>
+</div>
+</body>
+</html>
+<script type="application/x-javascript">
+    function checkBodyReg(srvUrl){
+            onclick = document.getElementById("resListWorker").style.display = 'block';
+            onclick = document.getElementById("resList").style.display = 'none';
+            onclick = document.getElementById("resBody").style.display = 'none';
+        var hrequest = new XMLHttpRequest();
+        hrequest.open("POST",srvUrl,true);
+        hrequest.onreadystatechange = function () {
+            if(hrequest.status == 200){
+                var js = JSON.parse(hrequest.response);
+                var  txt1 ="";
+                txt1 += "<table>";
+            var txt2="",txt3 ="",txt4 = "", txt5 = "", txt6 = "", txt7 = "";
+                for (var key in js){
+                    txt1 += "<tr><td>" + js[key].typeRequest + "</td></tr>";
+                }
+                txt1 += "</table>";
+                txt2 += "<table>";
+                for (var key in js){
+                    txt2 += "<tr><td>" + js[key].scale + "</td></tr>";
+                }
+                txt2 += "</table>";
+                txt3 += "<table>";
+                for (var key in js){
+                    txt3 += "<tr><td>" + js[key].dateFinish + "</td></tr>";
+                }
+                txt3 += "</table>";
+                txt4 += "<table>";
+                for (var key in js){
+                    txt4 += "<tr><td>" + js[key].address + "</td></tr>";
+                }
+                txt4 += "</table>";
+                txt5 += "<table>";
+                for (var key in js){
+                    var jsr = js[key].idPlanWork;
+                    var resul = {};
+                    if(jsr == 1){
+                        resul = "Request in progress";
+                    }else {
+                        resul = "Request complete";
+                    }
+                        txt5 += "<tr><td>" + resul + "</td></tr>";
+
+                }
+                txt5 += "</table>";
+                document.getElementById("typeRequest").innerHTML = txt1;
+                document.getElementById("scale").innerHTML = txt2;
+                document.getElementById("dateFinish").innerHTML = txt3;
+                document.getElementById("address").innerHTML = txt4;
+                document.getElementById("stateRequest").innerHTML = txt5;
+
+            }
+        };
+        hrequest.send();
+    }
+
+    function checkFormDelete(form){
+        var reg = new RegExp("^[a-zA-ZА-Яа-я]+$");
+        var nameBrigade = document.getElementById("nameBrigadesDelete").value;
+        if (nameBrigade == ""){
+            document.getElementById("errorLoginDelete").innerHTML="This field is not filled";
+            return false;
+        }
+        if(nameBrigade.length <2 || nameBrigade.length > 15){
+            document.getElementById("errorLoginDelete").innerHTML="Went beyond the meanings";
+            return false;
+        }
+        if( reg.test(nameBrigade) == false ){
+            document.getElementById("errorLoginDelete").innerHTML="invalid value entry";
+            return false;
+        }
+        return true;
+    }
+    function checkDelete(srvUrl) {
+        if(checkFormDelete(form) == true){
+            onclick = document.getElementById("resBody").style.display = 'block';
+            onclick = document.getElementById("resList").style.display = 'none';
+            onclick = document.getElementById("resListWorker").style.display = 'none';
+            var form = document.getElementById("formDelete");
+            var  brigade = {};
+            for (var i =0;i<form.elements.length;i++){
+                if(form.elements[i].type == "text"){
+                    brigade[form.elements[i].name] = form.elements[i].value;
+                }
+            }
+            var  hrequest = new XMLHttpRequest();
+            var json = JSON.stringify(brigade);
+            hrequest.open("POST",srvUrl,true);
+            hrequest.onreadystatechange = function () {
+                if (hrequest.status == 200) {
+                    var js = JSON.parse(hrequest.response);
+                    var txt1 = "";
+                    txt1 += "<table>";
+                var txt2 = "",txt3 = "";
+                    for (var key in js){
+                        txt1 += "<tr><td>" + js[key].name + "</td></tr>";
+                    }
+                    txt1 += "</table>";
+                    txt2 += "<table>";
+                    for (var key in js){
+                        txt2 += "<tr><td>" + js[key].surname + "</td></tr>";
+                    }
+                    txt2 += "</table>";
+                    txt3 += "<table>";
+                    for (var key in js){
+                        txt3 += "<tr><td>" + js[key].typeWorker + "</td></tr>";
+                    }
+                    txt3 += "</table>";
+                    document.getElementById("names").innerHTML = txt1;
+                    document.getElementById("surnames").innerHTML = txt2;
+                    document.getElementById("typeWorkers").innerHTML = txt3;
+                }
+            };
+            hrequest.send(json);
+        }else {
+            return false;
+        }
+    }
+    function checkFormDeleteCheck(form){
+            var reg = new RegExp("^[a-zA-ZА-Яа-я]+$");
+            var name = document.getElementById("nameWorkerDeleteCheck").value;
+            var surname = document.getElementById("surnameWorkerDeleteCheck").value;
+            if (name == "" && surname == "" ){
+                document.getElementById("errorLoginDeleteCheck").innerHTML="This field is not filled";
+                return false;
+            }
+            if((name.length <2 || name.length > 15)||(surname.length <2 || surname.length > 15)){
+                document.getElementById("errorLoginDeleteCheck").innerHTML="Went beyond the meanings";
+                return false;
+            }
+            if(reg.test(name) == false || reg.test(surname) == false){
+                document.getElementById("errorLoginDeleteCheck").innerHTML="invalid value entry";
+                return false;
+            }
+            return true;
+        }
+        function checkDeleteCheck(srvUrl) {
+            if(checkFormDeleteCheck(form) == true){
+                var form = document.getElementById("formDeleteCheck");
+                var  brigade = {};
+                for (var i =0;i<form.elements.length;i++){
+                    if(form.elements[i].type == "text"){
+                        brigade[form.elements[i].name] = form.elements[i].value;
+                    }
+                }
+                var  hrequest = new XMLHttpRequest();
+                var json = JSON.stringify(brigade);
+                hrequest.open("POST",srvUrl,true);
+                hrequest.onreadystatechange = function () {
+                    if (hrequest.status == 200) {
+                        var js = JSON.parse(hrequest.response);
+                        document.getElementById("errorLoginDeleteCheck").innerHTML = js;
+                    }
+                };
+                hrequest.send(json);
+            }else {
+                return false;
+            }
+    }
+    function checkFormAddPlanWork(form){
+        var reg = new RegExp("^[a-zA-ZА-Яа-я]+$");
+        var name = document.getElementById("typeRequestAddPlanWork").value;
+        var surname = document.getElementById("addressAddPlanWork").value;
+        if (name == "" && surname == "" ){
+            document.getElementById("errorLoginAddPlanWork").innerHTML="This field is not filled";
+            return false;
+        }
+        if((name.length <2 || name.length > 15)||(surname.length <2 || surname.length > 15)){
+            document.getElementById("errorLoginAddPlanWork").innerHTML="Went beyond the meanings";
+            return false;
+        }
+        if(reg.test(name) == false || reg.test(surname) == false){
+            document.getElementById("errorLoginAddPlanWork").innerHTML="invalid value entry";
+            return false;
+        }
+        return true;
+    }
+    function checkAddPlanWork(srvUrl) {
+        if(checkForm2(form) == true){
+            var form = document.getElementById("formAddPlanWork");
+            var  request = {};
+            for (var i =0;i<form.elements.length;i++){
+                if(form.elements[i].type == "text"){
+                    request[form.elements[i].name] = form.elements[i].value;
+                }
+            }
+            var json = JSON.stringify(request);
+            var  hrequest = new XMLHttpRequest();
+            hrequest.open("POST",srvUrl,true);
+            hrequest.onreadystatechange = function () {
+                if (hrequest.status == 200) {
+                    var js = JSON.parse(hrequest.response);
+                    document.getElementById("errorLoginAddPlanWork").innerHTML = js;
+                }
+            };
+            hrequest.send(json);
+        }else {
+            return false;
+        }
+    }
+</script>
+<style>
+    .outButton {
+        text-decoration: none;
+        outline: none;
+        display: inline-block;
+        color: white;
+        padding: 20px 30px;
+
+
+        border-radius: 10px;
+        font-family: 'Montserrat', sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        background-image: linear-gradient(to right, #9EEFE1 0%, #4830F0 51%, #9EEFE1 100%);
+        background-size: 200% auto;
+        box-shadow: 0 0 20px rgba(0,0,0,.1);
+        transition: .5s;
+    }
+    .outButton:hover {background-position: right center;}
+    .contentMain{
+        width: 1200px;
+        margin-left: 50px;
+
+    }
+    .contentMain{
+        width: 1200px;
+        margin-left: 50px;
+
+    }
+    .mainmaxMain{
+        height: 1400px;
+    }
+
+    table {width: 100%; border-collapse: collapse;}
+    table thead tr {color: #ffffff; font-weight: bold; background: #00bf80;}
+    table thead tr td {border: 1px solid #01ab73;}
+    table tbody tr td {border: 1px solid #e8e9eb;}
+    table tbody tr:nth-child(2n) {background: #f4f4f4;}
+    table tbody tr:hover {background: #ebffe8;}
+
+
+    .header{
+        height: 700px;
+        background: #f3efe3;
+        border-top: 2px solid #eae6d8;
+        box-shadow: 0 10px 20px 10px rgba(0,0,0,0.1);
+    }
+    body{
+        margin: 0;
+    }
+    .menu{
+        height: 150px;
+        background: linear-gradient(to bottom, #eee, #fefefe);
+    }
+    .headermini{
+        height: 100px;
+        background: #f3efe3;
+        border-top: 2px solid #eae6d8;
+        box-shadow: 0 10px 20px 10px rgba(0,0,0,0.1);
+    }
+    h1{
+        font-size: 40px;
+    }
+    .main{
+        height: 400px;
+    }
+    .content{
+        width: 1000px;
+        margin:0 auto;
+        min-height: 50px;
+    }
+    .link{
+        padding-top: 35px;
+        height: 95px;
+        width: 1000px;
+        float: left;
+        text-align: right;
+    }
+    .headertext{
+        text-align: center;
+        font-size: 40px;
+        color:#888;
+    }
+    .divNext{
+        padding-top: 100px;
+        height: 300px;
+        width: 498px;
+        float: left;
+    }
+    .miniround{
+        height: 20px;
+        width: 20px;
+        background: #42a9f8;
+        border-radius: 50%;
+        float: left;
+        margin:-1px 15px 0 0;
+    }
+    .button{
+        padding:0 10px;
+        background: #42a9f8;
+        height: 40px;
+        min-width: 140px;
+        float: left;
+        border-radius: 20px;
+        color:white;
+        text-align: center;
+        line-height: 39px;
+    }
+    .button:hover{
+        background: #f84242;
+        cursor:pointer;
+    }
+    .input{
+        padding: 10px;
+        margin:10px;
+        width: 250px;
+        outline: none;
+        box-shadow:
+                inset 0 30px 30px -15px rgba(0,0,0,0.1);
+        border:1px solid #ddd;
+    }
+    .marginButton{
+        margin-left: 10px;
+    }
+
+</style>

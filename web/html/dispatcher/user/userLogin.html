@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Login</title>
+</head>
+<body>
+<div class="menu">
+    <div class="content">
+        <div class="link">
+            <form method="get" action="userAddServlet" name="form">
+                <input type="submit" class="button marginButton" value="Registration" />
+            </form>
+        </div>
+    </div>
+</div>
+<div class="headermini">
+    <div class="content">
+        <h1>Communal Service resource</h1>
+    </div>
+</div>
+<div class="mainmax">
+    <div class="content">
+        <div class="divNext"></div>
+        <div class="divNext">
+            <form method="post" action="userLoginServlet" name="form" id="form" onsubmit="return checkForm(this)">
+                <input value="" type="text" class="input" id="login" name="login"  placeholder="login"><br>
+                <input value="" type="text" class="input" id="password" name="password" placeholder="password"> <br>
+                <input type="submit" class="button marginButton" value="Login"/>
+            </form>
+            <p id='errorLogin' class='error'></p>
+        </div>
+    </div>
+</div>
+<div id="demo"></div>
+<div class="footer">
+    <div class="content"></div>
+</div>
+</body>
+</html>
+<script type="application/javascript">
+    function checkForm(form){
+        var reg = new RegExp("^[a-zA-ZА-Яа-я]+$");
+        var reqs = new RegExp("^[a-zA-ZА-Яа-я0-9]+$");
+        var log = document.getElementById("login").value;
+        var pas = document.getElementById("password").value;
+        if (log === ""|| pas === ""){
+            document.getElementById("errorLogin").innerHTML="This field is not filled";
+            return false;
+        }
+        if((log.length <4 || log.length > 15) || (pas.length < 4 || pas.length > 15)){
+            document.getElementById("errorLogin").innerHTML="Went beyond the meanings";
+            return false;
+        }
+        if(reg.test(log) === false || reqs.test(pas) === false){
+            document.getElementById("errorLogin").innerHTML="invalid value entry";
+            return false;
+        }
+        return true;
+    }
+</script>
+<style>
+    .menu{
+        height: 150px;
+        background: linear-gradient(to bottom, #eee, #fefefe);
+    }
+    .headermini{
+        height: 100px;
+        background: #f3efe3;
+        border-top: 2px solid #eae6d8;
+        box-shadow: 0 10px 20px 10px rgba(0,0,0,0.1);
+    }
+    .mainmax{
+        height: 1400px;
+    }
+    .footer{
+        height: 100px;
+    }
+    .content{
+        width: 1000px;
+        margin:0 auto;
+        min-height: 50px;
+    }
+
+    .link{
+        padding-top: 35px;
+        height: 95px;
+        width: 1000px;
+        float: left;
+        text-align: right;
+    }
+    .divNext{
+        padding-top: 100px;
+        height: 300px;
+        width: 498px;
+        float: left;
+    }
+    .button{
+        padding:0 10px;
+        background: #42a9f8;
+        height: 40px;
+        min-width: 140px;
+        float: left;
+        border-radius: 20px;
+        color:white;
+        text-align: center;
+        line-height: 39px;
+    }
+    .button:hover{
+        background: #f84242;
+        cursor:pointer;
+    }
+    .input{
+        padding: 10px;
+        margin:10px;
+        width: 250px;
+        outline: none;
+        box-shadow:
+                inset 0 30px 30px -15px rgba(0,0,0,0.1);
+        border:1px solid #ddd;
+    }
+    .marginButton{
+        margin-left: 10px;
+    }
+
+</style>
